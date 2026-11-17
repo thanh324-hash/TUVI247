@@ -3,3 +3,31 @@
 
 .interpretations{margin:24px 0 20px}.interpretation-intro{padding:28px 30px;background:#f1e9dc;border:1px solid #e4d5bf;border-radius:14px;margin-bottom:14px}.interpretation-intro h2{font-family:'Playfair Display','Be Vietnam Pro',serif;color:var(--wine-dark);font-size:clamp(24px,3vw,32px);margin:5px 0 8px}.interpretation-intro p{max-width:850px;color:var(--muted);font-size:12px;margin:0;line-height:1.9}.interpretation-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 26px;margin:12px 0;scroll-margin-top:20px}.interpretation-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid var(--line);padding-bottom:12px}.interpretation-heading h3{font-family:'Playfair Display','Be Vietnam Pro',serif;color:var(--wine-dark);font-size:25px;margin:3px 0}.interpretation-heading> b{font-size:10px;letter-spacing:.14em;color:var(--gold);border:1px solid #ead9b7;border-radius:30px;padding:5px 10px}.palace-reading{font-size:13px;line-height:1.9;color:#51483f;margin:15px 0}.star-meanings{margin-top:20px;border-top:1px solid var(--line);padding-top:15px}.star-meanings h4{font-size:12px;color:var(--gold);letter-spacing:.06em;margin:0 0 10px}.star-meaning{display:grid;grid-template-columns:minmax(100px,160px) 1fr;gap:12px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:12px;line-height:1.8}.star-meaning b{color:var(--wine);font-size:12px}.star-meaning span{color:#62594f}.interpretation-foot{font-size:10px;color:#8a8075;margin-top:13px}.interpretation-card .star-groups{margin-top:18px}
 @media(max-width:700px){.interpretation-intro{padding:20px 17px}.interpretation-card{padding:19px 16px}.interpretation-heading h3{font-size:22px}.star-meaning{grid-template-columns:1fr;gap:2px;padding:9px 0}.palace-reading{font-size:12px}}
+
+
+/* Luận giải theo dữ liệu thực tế của từng lá số */
+.interpretation-theme{font-size:12px;color:var(--gold);margin:0}
+.analysis-section{margin:18px 0 0;padding-top:14px;border-top:1px solid var(--line)}
+.analysis-section h4,.star-meanings h5{margin:0 0 9px;color:var(--gold);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.analysis-section p,.analysis-section li,.analysis-paragraph{font-size:12px;line-height:1.9;color:#5f554b}
+.analysis-section ul,.analysis-evidence ul{margin:0;padding-left:19px}
+.analysis-section li{padding:3px 0}
+.analysis-paragraph{white-space:pre-line;background:#f7f2e9;border-left:3px solid var(--gold);padding:12px 14px;border-radius:0 8px 8px 0}
+.analysis-columns{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.analysis-columns .analysis-section{padding:14px;border:1px solid var(--line);border-radius:9px}
+.analysis-columns .caution{background:#fbf4f1}
+.analysis-columns .caution h4{color:#9a5148}
+.analysis-period{margin-top:17px;padding:12px 14px;background:#f1e9dc;border-radius:8px;color:#67533d;font-size:11px;line-height:1.8}
+.analysis-evidence{margin-top:13px;color:var(--muted);font-size:10px}
+.analysis-evidence summary{cursor:pointer;color:#8b704b;font-weight:700}
+.analysis-evidence li{padding:3px 0}
+.pattern-description{font-size:11px!important;line-height:1.8!important;color:#5f554b!important}
+.pattern-conditions{margin:9px 0;padding:9px 10px;background:#f5f0e8;border-radius:7px}
+.pattern-conditions strong{font-size:10px;color:#8b704b}
+.pattern-conditions ul{margin:5px 0 0;padding-left:17px}
+.pattern-conditions li{font-size:10px;color:#655b51;padding:2px 0}
+.pattern-conditions.caution{background:#fbefec}
+.pattern-conditions.caution strong{color:#984e45}
+.pattern-grid article{height:100%}
+@media(max-width:700px){.analysis-columns{grid-template-columns:1fr}.analysis-section p,.analysis-section li,.analysis-paragraph{font-size:11px}.analysis-period{font-size:10px}}
+@media print{.analysis-evidence{display:none}.interpretation-card{break-inside:avoid-page}.analysis-section{break-inside:avoid}}
