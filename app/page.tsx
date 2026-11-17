@@ -102,6 +102,7 @@ function FullInterpretations({chart}:{chart:ZiweiChart}) {
     </div>
     <details className="palace-deep-dive">
      <summary>Xem luận giải chuyên sâu · sao, cách cục và căn cứ</summary>
+     <section className="analysis-section"><h4>Tổng luận cung đầy đủ</h4><p>{a.overview}</p></section>
      {p.isEmpty?<p className="soft-note">Cung Vô Chính Diệu{p.borrowedStars?.length?' · mượn chính tinh từ '+palaceName(p.borrowedFromName||'')+': '+p.borrowedStars.map(starName).join('、'):' · cần xét cung đối diện'}; không kết luận cung này là xấu chỉ vì không có chính tinh.</p>:null}
      <section className="analysis-section"><h4>Hệ thống sao thực tế tại cung</h4><Stars palace={p}/><div className="star-meanings"><h5>Luận từng sao</h5>{p.stars.length?p.stars.map((s,i)=><div className="star-meaning" key={s.name+i}><b>{starName(s.name)}{s.siHua?' · '+(SIHUA[s.siHua]||s.siHua):''}</b><span>{interpretStar(s)}{s.brightnessRaw?' Trạng thái: '+(BRIGHT[s.brightnessRaw]||s.brightnessRaw)+'.':''}</span></div>):<p>Không có sao được an tại cung này.</p>}</div><p className="analysis-paragraph">{a.starSynthesis}</p></section>
      <div className="analysis-columns"><section className="analysis-section"><h4>Toàn bộ điểm hỗ trợ</h4><ul>{a.strengths.map((x,i)=><li key={i}>{x}</li>)}</ul></section><section className="analysis-section caution"><h4>Toàn bộ điểm cần lưu ý</h4><ul>{a.cautions.map((x,i)=><li key={i}>{x}</li>)}</ul></section></div>
