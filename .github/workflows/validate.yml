@@ -1,0 +1,17 @@
+name: Validate TUVI247
+on:
+  pull_request:
+    branches: [main]
+    paths: ['app/**','lib/ziwei/**','package.json','tsconfig.json','next.config.js']
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npm run typecheck
+      - run: npm run build
