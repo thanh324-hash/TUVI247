@@ -56,7 +56,54 @@ const STAR_CORE: Record<string,string> = {
   '火星':'Hỏa Tinh gợi phản ứng nhanh, nhiệt huyết và tính bộc phát; cần quản trị nóng nảy.',
   '铃星':'Linh Tinh gợi áp lực âm ỉ hoặc tình huống bất ngờ; nên có phương án dự phòng.',
   '地空':'Địa Không thường được diễn giải như sắc thái hư hao hoặc tư duy vượt khuôn; cần kiểm chứng thực tế.',
-  '地劫':'Địa Kiếp gợi biến động và nguy cơ hao hụt; nên quản trị rủi ro.'
+  '地劫':'Địa Kiếp gợi biến động và nguy cơ hao hụt; nên quản trị rủi ro.',
+  '红鸾':'Hồng Loan thường tượng trưng duyên gặp gỡ, cảm xúc và sức hấp dẫn; không khẳng định chắc chắn thời điểm kết hôn.',
+  '天喜':'Thiên Hỷ gắn với niềm vui, sự kiện đáng mừng và không khí hòa hợp; cần xét cùng các sao liên quan.',
+  '天刑':'Thiên Hình nhấn mạnh kỷ luật, nguyên tắc, ranh giới và tính nghiêm; nên tránh cứng nhắc.',
+  '天姚':'Thiên Riêu gợi sức hút, cảm xúc, thẩm mỹ và sự nhạy cảm trong quan hệ; cần giữ ranh giới.',
+  '天哭':'Thiên Khốc thường được luận như sắc thái ưu tư, nhạy cảm hoặc dễ suy nghĩ; nên quan tâm cách giải tỏa áp lực.',
+  '天虚':'Thiên Hư gợi khoảng cách giữa kỳ vọng và thực tế; nên kiểm chứng thông tin và tránh tự suy diễn.',
+  '孤辰':'Cô Thần biểu trưng tính độc lập, riêng tư hoặc xu hướng tự xử lý vấn đề; nên duy trì kết nối.',
+  '寡宿':'Quả Tú gợi sự trầm lắng, tự lập và nhu cầu không gian riêng; không đồng nghĩa cô độc tất định.',
+  '龙池':'Long Trì thường bổ sung sắc thái thanh nhã, năng khiếu hoặc sự trợ duyên trong giao tiếp.',
+  '凤阁':'Phượng Các thường gắn với vẻ tao nhã, thẩm mỹ, danh dự và sự trau chuốt.',
+  '解神':'Giải Thần tượng trưng khả năng tháo gỡ, hóa giải hoặc tìm lối ra khi gặp vướng mắc.',
+  '华盖':'Hoa Cái gợi chiều sâu, tính độc lập, thiên hướng nghệ thuật hoặc nghiên cứu; đôi khi thiên về khép kín.',
+  '天德':'Thiên Đức thường được xem là thiện tinh, nhấn mạnh lòng nhân hậu và khả năng giảm nhẹ va chạm.',
+  '月德':'Nguyệt Đức thường mang sắc thái mềm hóa, thiện ý và hỗ trợ trong quan hệ.',
+  '天官':'Thiên Quan gắn với danh vị, trách nhiệm, quy củ và sự hỗ trợ từ tổ chức.',
+  '天福':'Thiên Phúc thường tượng trưng phúc trợ, sự thuận lợi và khả năng nhận được giúp đỡ.',
+  '恩光':'Ân Quang gợi sự ghi nhận, thiện cảm và hỗ trợ thông qua học tập hoặc quan hệ.',
+  '天贵':'Thiên Quý thường được xem là quý tinh, tượng trưng cơ hội và sự nâng đỡ.',
+  '天寿':'Thiên Thọ gợi sự bền bỉ và duy trì nền tảng lâu dài; không phải chỉ báo tuổi thọ.',
+  '八座':'Bát Tọa gắn với vị thế, sự ổn định và khả năng được giao trọng trách.',
+  '三台':'Tam Thai gợi tiến trình nâng đỡ, học hỏi và từng bước tạo vị trí.',
+  '天才':'Thiên Tài tượng trưng năng khiếu, khả năng ứng biến hoặc sở trường riêng.',
+  '天使':'Thiên Sứ là phụ tinh cần luận theo hệ thống sao và cung liên quan; không dùng riêng để suy đoán sức khỏe.',
+  '天伤':'Thiên Thương thường được xếp nhóm sao cần lưu ý về tổn hao, áp lực hoặc va chạm theo quan niệm truyền thống.',
+  '天空':'Thiên Không gợi tính bất định, thay đổi hoặc xu hướng không bám chấp; cần kiểm tra tính thực tế.',
+  '大耗':'Đại Hao thường tượng trưng khoản chi lớn, hao tổn hoặc biến động nguồn lực; cần quản trị ngân sách.',
+  '小耗':'Tiểu Hao gợi các khoản hao hụt nhỏ, chi phí lặt vặt hoặc thất thoát do thiếu chú ý.',
+  '劫煞':'Kiếp Sát gợi cạnh tranh, sự cố bất ngờ hoặc rủi ro; nên thận trọng trong quyết định.',
+  '龙德':'Long Đức thường được xem là thiện tinh, bổ sung sắc thái hòa giải và trợ lực.',
+  '咸池':'Hàm Trì gắn với sức hút, giao tiếp, cảm xúc và đào hoa; cần giữ ranh giới rõ ràng.',
+  '阴煞':'Âm Sát gợi yếu tố kín đáo, lo xa hoặc tình huống khó thấy ngay; nên kiểm chứng thay vì nghi ngờ.',
+  '年解':'Niên Giải tượng trưng khả năng tháo gỡ khó khăn hoặc giảm nhẹ trở ngại trong năm.',
+  '截空':'Triệt Không thường gợi sự gián đoạn, hụt kỳ vọng hoặc cần điều chỉnh kế hoạch; phải xét đúng trường phái an sao.',
+  '副截':'Phó Triệt là sao phụ thuộc cách an của trường phái; nên luận cùng Triệt Không.',
+  '旬空':'Tuần Không gắn với tính chất ngăn trở, chậm lại hoặc làm giảm độ trực tiếp của biểu hiện; cần xét vị trí án ngữ.',
+  '副旬':'Phó Tuần là sao phụ thuộc cách an của trường phái; nên xét cùng Tuần Không.',
+  '博士':'Bác Sĩ thuộc vòng Bác Sĩ, thường gợi học hỏi, kỹ năng và sự chăm chút chuyên môn.',
+  '力士':'Lực Sĩ thuộc vòng Bác Sĩ, gợi sức làm việc, sự cố gắng và tính chịu trách nhiệm.',
+  '青龙':'Thanh Long thường mang sắc thái sinh động, cơ hội và tin vui theo hệ thống vòng sao.',
+  '将军':'Tướng Quân gợi tính chủ động, điều hành và quyết đoán; cần tránh áp đặt.',
+  '奏书':'Tấu Thư gắn với giấy tờ, trình bày, thông tin và việc xử lý văn bản.',
+  '飞廉':'Phi Liêm gợi sự nhanh chóng, biến động hoặc tình huống đến bất ngờ; cần linh hoạt.',
+  '喜神':'Hỷ Thần thường tượng trưng niềm vui, sự hòa thuận và không khí tích cực.',
+  '病符':'Bệnh Phù là sao biểu tượng trong thuật số; không có giá trị chẩn đoán bệnh và không thay thế y khoa.',
+  '伏兵':'Phục Binh gợi yếu tố tiềm ẩn, việc hậu trường hoặc vấn đề chưa bộc lộ; nên xác minh thông tin.',
+  '岁破':'Tuế Phá thường gợi thay đổi, xung động hoặc kế hoạch bị xáo trộn; cần có phương án dự phòng.',
+  '吊客':'Điếu Khách là sao mang sắc thái tang chế trong quan niệm cổ; không dùng để khẳng định sự kiện mất mát.'
 };
 
 const BRIGHTNESS: Record<string,string> = {
@@ -179,3 +226,5 @@ export function analyzePalace(chart: ZiweiChart, palace: Palace): PalaceAnalysis
   if (!interactions.length) interactions.push('Chưa có tổ hợp đặc biệt được nhận diện; vẫn cần xét tam phương tứ chính và hoàn cảnh thực tế.');
   return {theme:domain.theme,overview,starSynthesis,strengths,cautions,interactions,practical,currentPeriod,evidence};
 }
+
+export function interpretStar(star: Star): string { return starPhrase(star); }
