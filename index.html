@@ -391,12 +391,19 @@
     }
   });
 
+  function escapeHTML(value) {
+    const node = document.createElement('span');
+    node.textContent = String(value == null ? '' : value);
+    return node.innerHTML;
+  }
+
   function renderResult(data, fullname) {
     document.getElementById('result-section').style.display = 'block';
     const ov = data.overview;
+    const safeName = escapeHTML(fullname || 'Đương số');
 
     document.getElementById('overview-content').innerHTML = `
-      <div class="overview-item"><span>Họ tên:</span> ${fullname} (${ov.gender})</div>
+      <div class="overview-item"><span>Họ tên:</span> ${safeName} (${ov.gender})</div>
       <div class="overview-item"><span>Dương lịch:</span> ${ov.solarDate} (${ov.time})</div>
       <div class="overview-item"><span>Âm lịch:</span> ${ov.lunarDate}</div>
       <div class="overview-item"><span>Bát tự can chi:</span> ${ov.chineseDate}</div>
@@ -411,7 +418,7 @@
     const grid = document.getElementById('chart-grid');
     grid.innerHTML = `
       <div class="center-info">
-        <h3>${fullname}</h3>
+        <h3>${safeName}</h3>
         <p style="font-size: 0.95rem; color: #555;"><b>${ov.chineseDate}</b></p>
         <p style="color: var(--primary); font-weight: bold; margin-top: 6px;">${ov.fiveElementsClass}</p>
         <p style="font-size: 0.85rem; margin-top: 6px;">Mệnh chủ: <b>${ov.soul}</b> | Thân chủ: <b>${ov.body}</b></p>
