@@ -25,7 +25,7 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Be Vietnam Pro', 'Noto Sans', 'Segoe UI', Tahoma, sans-serif;
     }
     body {
       background-color: var(--bg);
@@ -258,6 +258,24 @@
       margin-top: 40px;
       color: #888;
       font-size: 0.9rem;
+    }
+  
+    .adjective-stars { color: #6b5a42; font-size: .78rem; line-height: 1.45; margin-top: 5px; overflow-wrap: anywhere; }
+    .section-heading { color: var(--primary); margin: 0 0 15px; font-size: 1.35rem; }
+    .chart-container { overflow-x: auto; padding-bottom: 6px; }
+    .chart-grid { min-width: 760px; }
+    .palace-cell { min-width: 0; overflow-wrap: anywhere; }
+    @media (max-width: 720px) {
+      body { padding: 12px; }
+      .header h1 { font-size: 1.65rem; }
+      .input-card, .reading-card { padding: 16px; }
+      .input-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .overview-banner { padding: 16px; }
+      .overview-grid { grid-template-columns: 1fr 1fr; font-size: .9rem; }
+      .print-btn { float: none; width: 100%; margin: 0 0 14px; }
+    }
+    @media (max-width: 420px) {
+      .input-grid, .overview-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
