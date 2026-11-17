@@ -1,23 +1,9 @@
 /**
  * Module phân tích & luận giải Tử Vi chuyên sâu
  */
-// Hỗ trợ cả Node.js lẫn Trình duyệt (Browser)
-var dictModule;
-if (typeof require !== 'undefined') {
-  dictModule = require('./dict.js');
-} else {
-  dictModule = {
-    DICT_SAO: window.DICT_SAO,
-    DICT_PHU_TINH: window.DICT_PHU_TINH,
-    DICT_CUNG: window.DICT_CUNG
-  };
-}
-var DICT_SAO = dictModule.DICT_SAO;
-var DICT_PHU_TINH = dictModule.DICT_PHU_TINH;
-var DICT_CUNG = dictModule.DICT_CUNG;
 
 function analyzeAstrolabe(astrolabe) {
-  const result = {
+  var result = {
     overview: {},
     palaces: [],
     details: [],
@@ -42,60 +28,60 @@ function analyzeAstrolabe(astrolabe) {
   };
 
   // Luận giải chi tiết từng cung
-  astrolabe.palaces.forEach((palace) => {
-    const palaceName = palace.name;
-    const branch = palace.earthlyBranch;
-    const stem = palace.heavenlyStem;
+  astrolabe.palaces.forEach(function(palace) {
+    var palaceName = palace.name;
+    var branch = palace.earthlyBranch;
+    var stem = palace.heavenlyStem;
     
     // Tên cung chuẩn để tra từ điển
-    let basePalaceKey = "Mệnh";
-    for (const key of Object.keys(DICT_CUNG)) {
-      if (palaceName.includes(key)) {
-        basePalaceKey = key;
+    var basePalaceKey = "Mệnh";
+    var cungKeys = Object.keys(DICT_CUNG);
+    for (var i = 0; i < cungKeys.length; i++) {
+      if (palaceName.indexOf(cungKeys[i]) >= 0) {
+        basePalaceKey = cungKeys[i];
         break;
       }
     }
 
-    const majorStarNames = palace.majorStars.map(s => s.name);
-    const minorStarNames = palace.minorStars.map(s => s.name);
-    const adjectiveStarNames = palace.adjectiveStars ? palace.adjectiveStars.map(s => s.name) : [];
-    const mutagens = palace.mutagens || [];
+    var majorStarNames = palace.majorStars.map(function(s) { return s.name; });
+    var minorStarNames = palace.minorStars.map(function(s) { return s.name; });
+    var adjectiveStarNames = palace.adjectiveStars ? palace.adjectiveStars.map(function(s) { return s.name; }) : [];
 
     // Luận giải các sao chính
-    const majorExplanations = [];
-    palace.majorStars.forEach(star => {
-      const starInfo = DICT_SAO[star.name];
+    var majorExplanations = [];
+    palace.majorStars.forEach(function(star) {
+      var starInfo = DICT_SAO[star.name];
       if (starInfo) {
-        let text = `• <b>${star.name}</b> (${star.brightness ? 'Độ sáng: ' + star.brightness + ' | ' : ''}Hành: ${starInfo.nguHanh}): ${starInfo.tongQuan}`;
-        if (starInfo.yNghiaCung[basePalaceKey]) {
-          text += ` <br>&nbsp;&nbsp;→ <i>Tại cung ${palaceName}:</i> ${starInfo.yNghiaCung[basePalaceKey]}`;
+        var text = '• <b>' + star.name + '</b> (' + (star.brightness ? 'Độ sáng: ' + star.brightness + ' | ' : '') + 'Hành: ' + starInfo.nguHanh + '): ' + starInfo.tongQuan;
+        if (starInfo.yNghiaCung && starInfo.yNghiaCung[basePalaceKey]) {
+          text += ' <br>&nbsp;&nbsp;→ <i>Tại cung ' + palaceName + ':</i> ' + starInfo.yNghiaCung[basePalaceKey];
         }
         if (star.mutagen) {
-          text += ` <br>&nbsp;&nbsp;→ <b>Hóa tinh:</b> Đắc <b>Hóa ${star.mutagen}</b> (${DICT_PHU_TINH['Hóa ' + star.mutagen] || ''})`;
+          text += ' <br>&nbsp;&nbsp;→ <b>Hóa tinh:</b> Đắc <b>Hóa ' + star.mutagen + '</b> (' + (DICT_PHU_TINH['Hóa ' + star.mutagen] || '') + ')';
         }
         majorExplanations.push(text);
       } else {
-        majorExplanations.push(`• <b>${star.name}</b>: ${star.brightness ? 'Độ sáng: ' + star.brightness : ''}`);
+        majorExplanations.push('• <b>' + star.name + '</b>: ' + (star.brightness ? 'Độ sáng: ' + star.brightness : ''));
       }
     });
 
     // Luận giải các phụ tinh trợ tinh đắc lực
-    const minorExplanations = [];
-    palace.minorStars.forEach(star => {
-      const expl = DICT_PHU_TINH[star.name];
+    var minorExplanations = [];
+    palace.minorStars.forEach(function(star) {
+      var expl = DICT_PHU_TINH[star.name];
       if (expl) {
-        minorExplanations.push(`• <b>${star.name}</b> (${star.brightness ? star.brightness + ' - ' : ''}${expl})`);
+        minorExplanations.push('• <b>' + star.name + '</b> (' + (star.brightness ? star.brightness + ' - ' : '') + expl + ')');
       } else {
-        minorExplanations.push(`• ${star.name}${star.brightness ? ' (' + star.brightness + ')' : ''}`);
+        minorExplanations.push('• ' + star.name + (star.brightness ? ' (' + star.brightness + ')' : ''));
       }
     });
 
     // Nhận định chung cho cung
-    let summary = `Cung ${palaceName} tọa lạc tại chi ${branch}, can ${stem}.`;
+    var summary = 'Cung ' + palaceName + ' tọa lạc tại chi ' + branch + ', can ' + stem + '.';
     if (majorStarNames.length === 0) {
-      summary += ` Cung này <b>Vô Chính Diệu</b> (không có chính tinh tọa thủ). Đương số cần mượn ánh sáng và lực tác động từ chính tinh của cung xung chiếu để luận giải, cuộc đời có tính thích ứng và xoay chuyển linh hoạt.`;
+      summary += ' Cung này <b>Vô Chính Diệu</b> (không có chính tinh tọa thủ). Đương số cần mượn ánh sáng và lực tác động từ chính tinh của cung xung chiếu để luận giải, cuộc đời có tính thích ứng và xoay chuyển linh hoạt.';
     } else {
-      summary += ` Được hội tụ bởi các chủ tinh uy lực: <b>${majorStarNames.join(', ')}</b>.`;
+      summary += ' Được hội tụ bởi các chủ tinh uy lực: <b>' + majorStarNames.join(', ') + '</b>.';
     }
 
     result.palaces.push({
@@ -116,10 +102,4 @@ function analyzeAstrolabe(astrolabe) {
   });
 
   return result;
-}
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { analyzeAstrolabe };
-} else {
-  window.analyzeAstrolabe = analyzeAstrolabe;
 }
