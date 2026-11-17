@@ -31,3 +31,40 @@
 .pattern-grid article{height:100%}
 @media(max-width:700px){.analysis-columns{grid-template-columns:1fr}.analysis-section p,.analysis-section li,.analysis-paragraph{font-size:11px}.analysis-period{font-size:10px}}
 @media print{.analysis-evidence{display:none}.interpretation-card{break-inside:avoid-page}.analysis-section{break-inside:avoid}}
+
+
+/* Clear, layered interpretation: quick answer first, full source-based reasoning on demand. */
+.chart-takeaways{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:20px 0 12px}
+.chart-takeaways>div{display:flex;flex-direction:column;gap:5px;padding:13px 14px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.55)}
+.chart-takeaways small,.quick-summary small,.quick-points small{font-size:9px;letter-spacing:.09em;font-weight:700;color:var(--muted)}
+.chart-takeaways b{font-size:15px;color:var(--wine-dark)}
+.chart-takeaways span{font-size:11px;line-height:1.55;color:var(--muted)}
+.interpretation-note{font-size:10px!important;line-height:1.65!important;color:var(--muted)!important}
+.interpretation-list-heading{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:26px 2px 10px}
+.interpretation-list-heading h2{font-family:'Playfair Display','Be Vietnam Pro',serif;color:var(--wine-dark);font-size:clamp(21px,2.6vw,28px);margin:3px 0}
+.interpretation-list-heading>span{font-size:10px;color:var(--muted);text-align:right}
+.palace-quick{padding-top:14px}
+.quick-summary{padding:12px 14px;border-radius:10px;background:#f8f4ed;border:1px solid var(--line)}
+.quick-summary p,.quick-points p,.quick-advice{font-size:12px;line-height:1.75;color:#554b41;margin:5px 0 0}
+.quick-points{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.quick-points>div{padding:11px 13px;border:1px solid var(--line);border-radius:9px}
+.quick-positive{background:#f2f7f1}
+.quick-positive small{color:#47734b}
+.quick-caution{background:#fbf4f1}
+.quick-caution small{color:#98584e}
+.quick-advice{padding:10px 12px;margin-top:9px;border-left:3px solid var(--gold);background:#faf8f4}
+.quick-advice b{color:var(--wine-dark)}
+.palace-deep-dive{margin-top:13px;border-top:1px solid var(--line);padding-top:11px}
+.palace-deep-dive>summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--wine);font-size:11px;font-weight:700;padding:7px 0}
+.palace-deep-dive>summary::-webkit-details-marker{display:none}
+.palace-deep-dive>summary:after{content:'＋';font-size:15px;color:var(--gold)}
+.palace-deep-dive[open]>summary:after{content:'−'}
+.palace-deep-dive[open]{padding-bottom:5px}
+@media(max-width:700px){
+ .chart-takeaways{grid-template-columns:1fr}
+ .chart-takeaways>div{padding:10px 12px}
+ .interpretation-list-heading{align-items:start;flex-direction:column;gap:3px}
+ .interpretation-list-heading>span{text-align:left}
+ .quick-points{grid-template-columns:1fr}
+ .quick-summary p,.quick-points p,.quick-advice{font-size:11px}
+}
