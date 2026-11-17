@@ -1,6 +1,15 @@
 import type { Palace, Star, ZiweiChart } from './types';
 import { detectPatterns } from './patterns';
 
+const chartPatternCache = new WeakMap<ZiweiChart, ReturnType<typeof detectPatterns>>();
+function getChartPatterns(chart: ZiweiChart): ReturnType<typeof detectPatterns> {
+  const cached = chartPatternCache.get(chart);
+  if (cached) return cached;
+  const detected = detectPatterns(chart);
+  chartPatternCache.set(chart, detected);
+  return detected;
+}
+
 export interface PalaceAnalysis {
   theme: string;
   overview: string;
@@ -233,7 +242,7 @@ export function analyzePalace(chart: ZiweiChart, palace: Palace): PalaceAnalysis
       if (transformed.length) interactions.push(`Tại cung ${rp.name}, ${transformed.map(s => `${s.name} mang Hóa ${s.siHua}`).join('、')}. Khi luận ${palace.name}, cần giữ rõ đây là Tứ Hóa ở cung hội chiếu, không gán nhầm thành sao Hóa tại cung ${palace.name}.`);
     }
   }
-  const chartPatterns = detectPatterns(chart).filter(pattern => pattern.palaces.includes(palace.name));
+  const chartPatterns = getChartPatterns(chart).filter(pattern => pattern.palaces.includes(palace.name));
   for (const pattern of chartPatterns) {
     const required = pattern.conditions?.required?.length ? ` Điều kiện đã nhận diện: ${pattern.conditions.required.join('；')}.` : '';
     const bonus = pattern.conditions?.bonus?.length ? ` Yếu tố gia tăng: ${pattern.conditions.bonus.join('；')}.` : '';
