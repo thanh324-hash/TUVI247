@@ -17,6 +17,65 @@ const GRID:Record<number,[number,number]>={5:[1,1],6:[1,2],7:[1,3],8:[1,4],4:[2,
 const starName=(s:string)=>STAR[s]||s;
 const palaceName=(s:string)=>PALACE[s]||s.replace('宫','');
 const levelName=(s:string)=>s==='excellent'?'Cách cục tốt':s==='good'?'Có điểm thuận':s==='caution'?'Cần lưu ý':'Trung tính';
+const PALACE_READING:Record<string,string>={
+'Mệnh':'Phản ánh khí chất, tư duy, năng lực tự thân và cách bạn định hình cuộc sống. Cần phối hợp chính tinh, phụ tinh, trạng thái miếu-vượng-hãm, cung Thân và tam phương tứ chính; không kết luận tính cách chỉ từ một sao.',
+'Huynh Đệ':'Luận về anh chị em, sự gắn kết và mức độ tương trợ trong gia đình. Cát tinh thường gợi sự hòa hợp; sát tinh, Hóa Kỵ hoặc sao cô độc nhắc đến khác biệt, khoảng cách hay trách nhiệm cần trao đổi rõ ràng.',
+'Phu Thê':'Cho biết khuynh hướng trong quan hệ đôi lứa, cách lựa chọn bạn đời, giao tiếp và cùng xử lý trách nhiệm. Cần xem đồng thời Mệnh, Phúc Đức và các sao đào hoa, sát-kỵ; không dùng riêng cung này để khẳng định hôn nhân tốt xấu.',
+'Tử Tức':'Liên quan con cái, việc nuôi dạy, sự tiếp nối và thành quả được chăm sóc lâu dài. Nên xét chính tinh, cát-sát tinh hội chiếu và cung Phúc Đức; đây không phải căn cứ dự đoán khả năng sinh con hay sức khỏe.',
+'Tài Bạch':'Phản ánh cách tạo thu nhập, quản lý tiền và sử dụng nguồn lực. Cần phối hợp Quan Lộc, Điền Trạch, Mệnh và các sao Lộc-Quyền-Kỵ; lá số không thay thế kế hoạch tài chính thực tế.',
+'Tật Ách':'Theo truyền thống, cung này biểu trưng những điểm dễ hao tổn, áp lực và cách chăm sóc thân-tâm. Các sao chỉ mang ý nghĩa biểu tượng, không thể chẩn đoán bệnh hoặc thay thế tư vấn y tế.',
+'Thiên Di':'Luận môi trường bên ngoài, việc đi xa, thay đổi nơi sống, giao tiếp xã hội và khả năng thích nghi. Nên xét cung Mệnh đối chiếu, các sao dịch chuyển và cát-sát hội tụ.',
+'Nô Bộc':'Phản ánh bạn bè, đồng nghiệp, cộng sự, mạng lưới hỗ trợ và cách xây dựng niềm tin. Sát tinh hoặc Hóa Kỵ nhắc cần rạch ròi quyền lợi, trách nhiệm và thỏa thuận khi hợp tác.',
+'Quan Lộc':'Luận con đường nghề nghiệp, phong cách làm việc, năng lực tổ chức và cách theo đuổi mục tiêu. Cần kết hợp Mệnh, Tài Bạch, Thiên Di và đại hạn; không thể dựa vào một sao để khẳng định thành bại.',
+'Điền Trạch':'Liên quan nhà cửa, nơi ở, tài sản cố định và nền tảng gia đình. Cần xét Tài Bạch, Phúc Đức, các sao Lộc và sát-kỵ; không phải dự báo pháp lý hay định giá bất động sản.',
+'Phúc Đức':'Biểu trưng nền nếp gia đình, đời sống tinh thần, khả năng tìm sự an ổn và giá trị truyền lại. Nên xem cùng Mệnh và Phu Thê để hiểu chiều sâu nội tâm và sức bền tinh thần.',
+'Phụ Mẫu':'Luận mối quan hệ với cha mẹ, người nuôi dưỡng, nền tảng giáo dục và hỗ trợ từ thế hệ trước. Các sao mô tả khuynh hướng tương tác, không xác định phẩm chất hay số phận của cha mẹ.'
+};
+const STAR_READING:Record<string,string>={
+'紫微':'Tử Vi tượng trưng năng lực tổ chức, trách nhiệm, lòng tự trọng và khuynh hướng điều phối. Khi thuận thường đĩnh đạc, bao quát; khi gặp nhiều sát-kỵ có thể cứng nhắc hoặc nặng quyền kiểm soát.',
+'天机':'Thiên Cơ chủ tư duy, tính toán, học hỏi và thích nghi. Mặt thuận là nhanh trí, biết tìm phương án; mặt cần điều chỉnh là suy nghĩ nhiều hoặc thiếu kiên định.',
+'太阳':'Thái Dương tượng trưng sự chủ động, tinh thần đóng góp và danh dự. Trạng thái sáng thường cởi mở; trạng thái yếu nhắc cân bằng sức lực và kỳ vọng.',
+'武曲':'Vũ Khúc gắn với tính thực tế, kỷ luật, quản trị nguồn lực và quyết đoán. Ưu điểm là coi trọng kết quả; hạn chế có thể là khô khan hoặc quá nặng hiệu suất.',
+'天同':'Thiên Đồng biểu trưng hòa nhã, cảm thông và thích ứng. Thuận ở sự mềm mỏng; cần lưu ý ngại va chạm hoặc trì hoãn quyết định.',
+'廉贞':'Liêm Trinh tượng trưng nguyên tắc, sức hút cá nhân và khát vọng khẳng định mình. Mặt tích cực là có lập trường; mặt cần tiết chế là nhạy cảm với đánh giá.',
+'天府':'Thiên Phủ gắn với tích lũy, ổn định và quản lý. Thường nhấn mạnh sự thận trọng, đáng tin; đôi khi dễ an phận hoặc ngại thay đổi.',
+'太阴':'Thái Âm tượng trưng chiều sâu cảm xúc, sự tinh tế và khả năng chăm lo. Khi thuận thường chu đáo; khi bất lợi có thể nhạy cảm hoặc do dự.',
+'贪狼':'Tham Lang biểu trưng ham học hỏi, giao tiếp, trải nghiệm và nghệ thuật. Mặt mạnh là linh hoạt, có sức hút; cần quản trị ham muốn và sự phân tán.',
+'巨门':'Cự Môn gắn với ngôn ngữ, phân tích và phản biện. Có thể giỏi nghiên cứu, thương lượng; cần chú ý diễn đạt và tranh cãi không cần thiết.',
+'天相':'Thiên Tướng tượng trưng phục vụ, công bằng và phối hợp. Thuận ở sự chu đáo; cần tránh phụ thuộc đánh giá bên ngoài hoặc ôm việc.',
+'天梁':'Thiên Lương gắn với kinh nghiệm, bảo trợ và nguyên tắc. Mặt thuận là chín chắn; mặt cần lưu ý là bảo thủ hoặc gánh quá nhiều.',
+'七杀':'Thất Sát tượng trưng quyết đoán, chịu áp lực và hành động trong hoàn cảnh khó. Cần kiểm soát nóng vội, cạnh tranh và rủi ro.',
+'破军':'Phá Quân biểu trưng đổi mới, phá khuôn cũ và tái cấu trúc. Mặt mạnh là dám thay đổi; cần quản trị biến động và tránh quyết định cực đoan.',
+'文昌':'Văn Xương chủ học thuật, trình bày, văn bản và tư duy hệ thống; phát huy qua học tập, viết lách và chuẩn hóa quy trình.',
+'文曲':'Văn Khúc gắn với nghệ thuật, cảm thụ, ngôn ngữ và biểu đạt tinh tế; nên đi cùng tính thực tế.',
+'左辅':'Tả Phù tượng trưng trợ giúp, phối hợp và khả năng làm việc nhóm.',
+'右弼':'Hữu Bật biểu trưng hỗ trợ mềm dẻo, kết nối và tháo gỡ khó khăn.',
+'天魁':'Thiên Khôi thường được xem là quý tinh, tượng trưng cơ hội học hỏi và người hướng dẫn.',
+'天钺':'Thiên Việt là quý tinh, gợi sự trợ lực và lời khuyên hữu ích.',
+'禄存':'Lộc Tồn tượng trưng tích lũy, nguồn lực và ý thức giữ gìn thành quả.',
+'天马':'Thiên Mã gắn với dịch chuyển, thay đổi, giao thương và nhịp sống năng động.',
+'擎羊':'Kình Dương là sát tinh, thường tượng trưng va chạm, cạnh tranh và tính quyết liệt; nên chú trọng an toàn.',
+'陀罗':'Đà La gợi trì trệ, vướng mắc hoặc tiến trình cần kiên nhẫn; tránh cố chấp.',
+'火星':'Hỏa Tinh tượng trưng phản ứng nhanh, nhiệt huyết và tính bộc phát; cần quản trị nóng nảy.',
+'铃星':'Linh Tinh gợi áp lực âm ỉ và phản ứng bất ngờ; nên có phương án dự phòng.',
+'地空':'Địa Không thường được diễn giải như tính chất hư hao hoặc tư duy vượt khuôn; cần kiểm chứng thực tế.',
+'地劫':'Địa Kiếp gợi biến động và nguy cơ hao hụt; nên quản trị rủi ro.',
+'红鸾':'Hồng Loan tượng trưng duyên gặp gỡ, sức hấp dẫn và cảm xúc; không khẳng định chắc chắn về hôn nhân.',
+'天喜':'Thiên Hỷ gắn với niềm vui, sự kiện tốt và không khí hòa hợp.',
+'天刑':'Thiên Hình nhấn mạnh nguyên tắc, kỷ luật và ranh giới; tránh phán xét cứng nhắc.',
+'天姚':'Thiên Riêu gợi sức hút, cảm xúc và năng khiếu thẩm mỹ; cần giữ ranh giới rõ ràng.',
+'孤辰':'Cô Thần tượng trưng tính độc lập, riêng tư hoặc cảm giác khó chia sẻ; nên duy trì kết nối.',
+'寡宿':'Quả Tú gợi sự trầm lắng, tự lập và nhu cầu không gian riêng.',
+'天哭':'Thiên Khốc thường gắn với tâm trạng nhạy cảm, ưu tư; nên quan tâm giải tỏa cảm xúc.',
+'天虚':'Thiên Hư gợi kỳ vọng và thực tế có độ vênh; nên kiểm chứng thông tin.'
+};
+const starInterpretation=(s:Palace['stars'][number])=>STAR_READING[s.name]||(s.type==='lucky'?'Phụ tinh có sắc thái hỗ trợ theo cách luận truyền thống; cần xét cung tọa thủ và các sao hội chiếu.':s.type==='sha'?'Sát tinh thường tượng trưng áp lực hoặc tính quyết liệt; không có nghĩa sự kiện xấu chắc chắn xảy ra.':s.type==='minor'?'Phụ tinh bổ sung sắc thái cho cung; cần xét cùng chính tinh và tổ hợp sao.':'Chính tinh cần được luận trong tổng thể lá số và trạng thái miếu-vượng-hãm.');
+function FullInterpretations({chart}:{chart:ZiweiChart}) {
+ return <section className="interpretations" id="luan-giai-chi-tiet"><div className="interpretation-intro"><span className="kicker">LUẬN GIẢI TOÀN BỘ LÁ SỐ</span><h2>12 cung và ý nghĩa các sao</h2><p>Tất cả các cung được trình bày liên tục bên dưới, không cần bấm chọn từng ô. Đây là diễn giải theo ý nghĩa truyền thống; cần đối chiếu tam phương tứ chính, tuần-triệt, đại hạn và hoàn cảnh thực tế để tránh kết luận một chiều.</p></div>
+ {chart.palaces.map(p=><article className="interpretation-card" key={p.branch}><div className="interpretation-heading"><div><span className="kicker">{STEM[p.stem]} {BRANCH[p.branch]} · {p.daXianAge?'ĐẠI HẠN '+p.daXianAge[0]+'–'+p.daXianAge[1]:'12 CUNG'}</span><h3>{palaceName(p.name)}</h3></div>{p.isMingGong?<b>MỆNH</b>:p.isShenGong?<b>THÂN</b>:null}</div><p className="palace-reading">{PALACE_READING[palaceName(p.name)]||'Cung này cần được luận cùng các sao tọa thủ, cung đối chiếu và tam phương tứ chính để hiểu đúng vai trò trong toàn bộ lá số.'}</p>{p.isEmpty?<p className="soft-note">Cung Vô Chính Diệu{p.borrowedStars?.length?' – tham khảo chính tinh mượn từ cung '+palaceName(p.borrowedFromName||'')+': '+p.borrowedStars.map(starName).join(', '):'.'} Cần xem cung xung chiếu và bộ sao hội hợp.</p>:null}<Stars palace={p}/><div className="star-meanings"><h4>Diễn giải từng sao tại cung</h4>{p.stars.length?p.stars.map((s,i)=><div className="star-meaning" key={s.name+i}><b>{starName(s.name)}</b><span>{s.brightnessRaw?'Trạng thái '+(BRIGHT[s.brightnessRaw]||s.brightnessRaw)+'. ':''}{s.siHua?'Có '+(SIHUA[s.siHua]||s.siHua)+'. ':''}{starInterpretation(s)}</span></div>):<p>Chưa có dữ liệu sao được an tại cung này.</p>}</div><div className="interpretation-foot">Gợi ý đọc: xem sao chính trước, sau đó xét cát tinh, sát tinh, tứ hóa và các cung liên hệ.</div></article>)}
+ </section>;
+}
+
 
 function Stars({palace}:{palace:Palace}) {
  return <div className="star-groups">{(['major','lucky','minor','sha'] as const).map(type=>{
@@ -78,9 +137,9 @@ export default function Home() {
    {tab==='details'?<div className="detail-list">{chart.palaces.map(p=><article key={p.branch}><div className="detail-head"><div><span className="kicker">{STEM[p.stem]} {BRANCH[p.branch]}</span><h3>{palaceName(p.name)}</h3></div><small>{p.daXianAge?p.daXianAge[0]+'–'+p.daXianAge[1]+' tuổi':'—'}</small></div>{p.isEmpty?<p className="soft-note">Vô Chính Diệu{p.borrowedStars?.length?' · Mượn chính tinh cung '+palaceName(p.borrowedFromName||'')+': '+p.borrowedStars.map(starName).join(', '):''}</p>:null}<Stars palace={p}/></article>)}</div>:null}
    {tab==='patterns'?<section className="subpanel"><h3>Cách cục được bộ máy nhận diện</h3><p>Các tên cách cục được Việt hóa. Kết quả dựa trên điều kiện sao, vị trí cung và quy tắc nhận diện của thư viện nguồn.</p>{patterns.length?<div className="pattern-grid">{patterns.map((p,i)=><article key={p.name+i}><b>{PATTERN[p.name]||'Cách cục Tử Vi'}</b><small>{levelName(p.level)}</small><p>{p.palaces.map(palaceName).join(' · ')}</p><em>Nhận diện theo bộ điều kiện của thư viện nguồn.</em></article>)}</div>:<p>Chưa phát hiện cách cục nổi bật theo các điều kiện hiện có. Điều này không đồng nghĩa lá số không có điểm mạnh hoặc điểm cần lưu ý.</p>}</section>:null}
    {tab==='fortune'?<section className="subpanel"><h3>Các giai đoạn đại hạn</h3><p>Tuổi tính theo tuổi mụ của hệ thống lập lá số.</p><div className="fortune-grid">{chart.daXians.map((d,i)=><button key={i} className={i===chart.currentDaXianIndex?'current':''} onClick={()=>{setSelectedBranch(d.palaceBranch);setTab('chart')}}><small>GIAI ĐOẠN {i+1}</small><b>{d.startAge}–{d.endAge}</b><span>tuổi · {palaceName(d.palaceName)} ({BRANCH[d.palaceBranch]})</span>{i===chart.currentDaXianIndex?<em>Đại hạn hiện tại</em>:null}</button>)}</div></section>:null}
-   <div className="bottom-summary"><div><span className="kicker">TỔNG QUAN CUNG MỆNH</span><h3>{summary?.nature||'Mệnh Vô Chính Diệu'}</h3><p>{summary?.keywords?.length?'Từ khóa chủ tinh: '+summary.keywords.join(' · '):'Cung Mệnh không có chính tinh tọa thủ; cần xét cung xung chiếu và tam phương tứ chính.'}</p></div><strong>{summary?.stars?.length?summary.stars.map(starName).join(' · '):'Vô Chính Diệu'}</strong></div>
+   <FullInterpretations chart={chart}/><div className="bottom-summary"><div><span className="kicker">TỔNG QUAN CUNG MỆNH</span><h3>{summary?.nature||'Mệnh Vô Chính Diệu'}</h3><p>{summary?.keywords?.length?'Từ khóa chủ tinh: '+summary.keywords.join(' · '):'Cung Mệnh không có chính tinh tọa thủ; cần xét cung xung chiếu và tam phương tứ chính.'}</p></div><strong>{summary?.stars?.length?summary.stars.map(starName).join(' · '):'Vô Chính Diệu'}</strong></div>
    <p className="disclaimer">Tử Vi là hệ thống tri thức văn hóa truyền thống. Nội dung mang tính tham khảo, không phải kết luận khoa học hay căn cứ duy nhất cho quyết định về sức khỏe, tài chính, tình cảm hoặc công việc.</p>
   </section>:null}
-  <footer className="footer"><b>TỬ VI 247</b><p>Phát triển dựa trên bộ máy mã nguồn mở Zi Wei Dou Shu.</p><a href="https://github.com/Renhuai123/ziwei-doushu" target="_blank" rel="noreferrer">Xem mã nguồn tham khảo ↗</a></footer>
+
  </main>;
 }
