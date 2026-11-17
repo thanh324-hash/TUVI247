@@ -175,10 +175,9 @@ function starPhrase(s: Star, palaceName?: string): string {
       : s.type === 'minor'
         ? 'Phụ tinh bổ sung sắc thái cho cung; cần xét cùng chính tinh và tổ hợp sao.'
         : 'Chính tinh cần được luận trong tổng thể lá số.');
-  const lens = palaceName && DOMAIN_LENS[palaceName] ? ` Khi đặt tại cung ${palaceName}, cần xét đặc tính này trong lĩnh vực ${DOMAIN_LENS[palaceName]}.` : '';
   const state = s.brightnessRaw ? ' ' + brightnessText(s) : '';
   const hua = s.siHua ? ' ' + HUA[s.siHua] : '';
-  return core + lens + state + hua;
+  return core + state + hua;
 }
 function combination(stars: string[]): string[] {
   const set = new Set(stars);
@@ -228,6 +227,10 @@ export function analyzePalace(chart: ZiweiChart, palace: Palace): PalaceAnalysis
   if (lucky.length) strengths.push('Cát tinh/phụ trợ hiện diện: ' + names(lucky) + '. Đây là dấu hiệu hỗ trợ theo cách luận truyền thống, hiệu lực tùy tổ hợp.');
   if (sha.length) cautions.push('Sát tinh/Không Kiếp hiện diện: ' + names(sha) + '. Nên xem đây là khu vực cần quản trị áp lực, va chạm hoặc hao tổn, không phải dự báo chắc chắn.');
   if (hua.length) {
+    const favorableHua = hua.filter(s => s.siHua === '禄' || s.siHua === '权' || s.siHua === '科');
+    const huaJi = hua.filter(s => s.siHua === '忌');
+    if (favorableHua.length) strengths.push('Tứ Hóa tại cung có ' + favorableHua.map(s => `${s.name} Hóa ${s.siHua}`).join('、') + '. Đây là yếu tố cần xét theo lĩnh vực của cung, không tự động đồng nghĩa thành công hay giàu có.');
+    if (huaJi.length) cautions.push('Tứ Hóa Kỵ tại cung có ' + names(huaJi) + '. Theo cách luận truyền thống, đây là điểm dễ phát sinh vướng mắc hoặc phải dành nhiều tâm sức; cần xem thêm tam phương tứ chính và vận hạn trước khi kết luận.');
     for (const s of hua) interactions.push(s.name + ' mang ' + (s.siHua ? HUA[s.siHua] : 'Tứ Hóa') + (s.siHua === '忌' ? ' Cần xem sao này ở cung nào và các cung liên hệ.' : ' Cần xét lĩnh vực của cung để hiểu biểu hiện.'));
   }
   if (palace.selfSihua?.length) interactions.push('Dấu tự hóa theo dữ liệu lá số: ' + palace.selfSihua.map(x => x.starName + ' tự Hóa ' + x.siHua).join('、') + '. Cần phân biệt tự hóa với sinh niên Tứ Hóa.');
