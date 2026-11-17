@@ -68,3 +68,5 @@
  .quick-points{grid-template-columns:1fr}
  .quick-summary p,.quick-points p,.quick-advice{font-size:11px}
 }
+
+.quick-summary p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
