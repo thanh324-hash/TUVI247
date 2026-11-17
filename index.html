@@ -449,7 +449,7 @@
         </div>
         <div class="major-stars">${majorHtml}</div>
         <div class="minor-stars">${minorHtml ? "<b>Phụ tinh:</b> " + minorHtml : ""}</div>
-        <div class="adjective-stars">${palace.adjectiveStars && palace.adjectiveStars.length ? "<b>Tạp diệu:</b> " + palace.adjectiveStars.map(s => s.name).join(", ") : ""}</div>
+        <div class="adjective-stars">${palace.adjectiveStars && palace.adjectiveStars.length ? "<b>Tạp diệu:</b> " + palace.adjectiveStars.join(", ") : ""}</div>
         <div style="margin-top: auto; font-size: 0.75rem; color: #777; display: flex; justify-content: space-between;">
           <span>Đại hạn: ${palace.decadal ? palace.decadal.range[0] + '-' + palace.decadal.range[1] : ''}</span>
           <span>${palace.changsheng12 || ''}</span>
@@ -509,6 +509,8 @@
           <p><b>Tổng quan:</b> ${palace.summary}</p>
           ${majorsContent}
           ${minorsContent}
+          ${palace.adjectiveStars && palace.adjectiveStars.length ? "<div style=\"margin-top:12px;\"><b style=\"color:var(--gold-dark);\">Tạp diệu và sao lưu ý:</b><p>" + palace.adjectiveStars.join(", ") + "</p></div>" : ""}
+          <div style="margin-top:12px;font-size:.9rem;color:#666;"><b>Thông tin vận hạn:</b> Đại hạn ${palace.decadal ? palace.decadal.range.join("–") : "—"} · Tràng sinh: ${palace.changsheng12 || "—"} · Bác sĩ: ${palace.boshi12 || "—"}</div>
         </div>
       `;
       readingsDiv.appendChild(card);
