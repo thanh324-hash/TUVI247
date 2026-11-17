@@ -2,4 +2,4 @@
 :HL["https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap","style"]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":"/_not-found","h":96,"c":"$Q2"}]]
-0:{"b":"F8QJD7wyUnro0xpShAtFj","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"02iGnIzuJ1SayrSJ7fp8k","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
