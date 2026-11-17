@@ -22,3 +22,5 @@ Bộ máy nguồn hỗ trợ lập lá số, an sao, tứ hóa, đại hạn và
 
 ## Giấy phép
 Mã nguồn engine tích hợp theo MIT. Xem LICENSE-ziwei-doushu và NOTICE. Không sao chép các trích dẫn có điều kiện phi thương mại hoặc dữ liệu luận giải riêng biệt.
+
+Engine source revision: d4ae2ac231a47146d9e2801fc9a017d712cb3289.
