@@ -4,7 +4,7 @@ import { generateChart } from '@/lib/ziwei/algorithm';
 import { detectPatterns, getMingGongSummary } from '@/lib/ziwei/patterns';
 import { calculateTrueSolarTime, resolveZiweiDayOffset, shiftGregorianDate } from '@/lib/ziwei/true-solar-time';
 import type { BirthInfo, Palace, ZiweiChart } from '@/lib/ziwei/types';
-import { analyzePalace } from '@/lib/ziwei/interpretation';
+import { analyzePalace, interpretStar } from '@/lib/ziwei/interpretation';
 
 const BRANCH=['Tý','Sửu','Dần','Mão','Thìn','Tỵ','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi'];
 const STEM=['Giáp','Ất','Bính','Đinh','Mậu','Kỷ','Canh','Tân','Nhâm','Quý'];
@@ -80,7 +80,7 @@ function FullInterpretations({chart}:{chart:ZiweiChart}) {
     <div className="interpretation-heading"><div><span className="kicker">{STEM[p.stem]} {BRANCH[p.branch]} · {p.daXianAge?'ĐẠI HẠN '+p.daXianAge[0]+'–'+p.daXianAge[1]:'12 CUNG'}</span><h3>{palaceName(p.name)}</h3><p className="interpretation-theme">{a.theme}</p></div>{p.isMingGong?<b>MỆNH</b>:p.isShenGong?<b>THÂN</b>:null}</div>
     <section className="analysis-section"><h4>Tổng luận cung</h4><p>{a.overview}</p></section>
     {p.isEmpty?<p className="soft-note">Cung Vô Chính Diệu{p.borrowedStars?.length?' · mượn chính tinh từ '+palaceName(p.borrowedFromName||'')+': '+p.borrowedStars.map(starName).join('、'):' · cần xét cung đối diện'}; không kết luận cung này là xấu chỉ vì không có chính tinh.</p>:null}
-    <section className="analysis-section"><h4>Hệ thống sao thực tế tại cung</h4><Stars palace={p}/><div className="star-meanings"><h5>Luận từng sao</h5>{p.stars.length?p.stars.map((s,i)=><div className="star-meaning" key={s.name+i}><b>{starName(s.name)}{s.siHua?' · '+(SIHUA[s.siHua]||s.siHua):''}</b><span>{starInterpretation(s)}{s.brightnessRaw?' Trạng thái: '+(BRIGHT[s.brightnessRaw]||s.brightnessRaw)+'.':''}</span></div>):<p>Không có sao được an tại cung này.</p>}</div><p className="analysis-paragraph">{a.starSynthesis}</p></section>
+    <section className="analysis-section"><h4>Hệ thống sao thực tế tại cung</h4><Stars palace={p}/><div className="star-meanings"><h5>Luận từng sao</h5>{p.stars.length?p.stars.map((s,i)=><div className="star-meaning" key={s.name+i}><b>{starName(s.name)}{s.siHua?' · '+(SIHUA[s.siHua]||s.siHua):''}</b><span>{interpretStar(s)}{s.brightnessRaw?' Trạng thái: '+(BRIGHT[s.brightnessRaw]||s.brightnessRaw)+'.':''}</span></div>):<p>Không có sao được an tại cung này.</p>}</div><p className="analysis-paragraph">{a.starSynthesis}</p></section>
     <div className="analysis-columns"><section className="analysis-section"><h4>Điểm hỗ trợ</h4><ul>{a.strengths.map((x,i)=><li key={i}>{x}</li>)}</ul></section><section className="analysis-section caution"><h4>Điểm cần lưu ý</h4><ul>{a.cautions.map((x,i)=><li key={i}>{x}</li>)}</ul></section></div>
     <section className="analysis-section"><h4>Tổ hợp sao và liên hệ các cung</h4><ul>{a.interactions.map((x,i)=><li key={i}>{x}</li>)}</ul></section>
     <section className="analysis-section"><h4>Gợi ý ứng dụng thực tế</h4><ul>{a.practical.map((x,i)=><li key={i}>{x}</li>)}</ul></section>
