@@ -1,0 +1,6 @@
+TUVI247 integrates code from Renhuai123/ziwei-doushu.
+Upstream: https://github.com/Renhuai123/ziwei-doushu
+Upstream revision: d4ae2ac231a47146d9e2801fc9a017d712cb3289
+License for upstream source code: MIT. See LICENSE-ziwei-doushu.
+The separately licensed CC BY-NC-SA 4.0 quotations and upstream interpretation datasets are not copied into this migration. The v4.0 interpretation dataset has separate CC BY 4.0 attribution terms and is not included.
+The upstream open-source engine provides chart calculation and pattern detection. It does not include the upstream commercial judgment library, AI prompts, or hosted AI interpretation API.
