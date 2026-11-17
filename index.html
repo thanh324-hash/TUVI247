@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tử Vi Đẩu Số 247 - Tra Cứu & Luận Giải Mệnh Bàn Chuẩn Xác</title>
+  <!-- Nhúng iztro thư viện Tử Vi Đẩu Số -->
+  <script src="iztro.min.js"></script>
+  <!-- Dữ liệu từ điển và bộ phân tích luận giải chi tiết -->
+  <script src="dict.js"></script>
+  <script src="analyzer.js"></script>
+  <style>
+    :root {
+      --primary: #8b1d1d;
+      --primary-light: #b33939;
+      --gold: #d4af37;
+      --gold-dark: #aa820a;
+      --bg: #f8f6f0;
+      --card-bg: #ffffff;
+      --text: #2c2c2c;
+      --border: #e2d9c8;
+      --shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--border);
+    }
+    .header h1 {
+      color: var(--primary);
+      font-size: 2.2rem;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .header p {
+      color: var(--gold-dark);
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .input-card {
+      background: var(--card-bg);
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      margin-bottom: 25px;
+    }
+    .input-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 18px;
+      align-items: flex-end;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+    .form-group label {
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+    }
+    .form-group input, .form-group select {
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      background: #faf9f6;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .form-group input:focus, .form-group select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(139, 29, 29, 0.15);
+    }
+    .btn-submit {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: #fff;
+      font-weight: bold;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.05rem;
+      transition: all 0.2s;
+      box-shadow: 0 4px 10px rgba(139, 29, 29, 0.3);
+      height: 48px;
+    }
+    .btn-submit:hover {
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      transform: translateY(-2px);
+    }
+    .result-section {
+      display: none;
+    }
+    .overview-banner {
+      background: linear-gradient(135deg, #3a0007, #66101f);
+      color: #fff;
+      padding: 20px 24px;
+      border-radius: 12px;
+      margin-bottom: 25px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--gold);
+    }
+    .overview-banner h2 {
+      color: var(--gold);
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+    }
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      font-size: 1rem;
+    }
+    .overview-item span {
+      color: var(--gold);
+      font-weight: bold;
+    }
+    .chart-container {
+      margin-bottom: 30px;
+    }
+    .chart-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+      gap: 10px;
+      background: #dfd5c4;
+      padding: 10px;
+      border-radius: 12px;
+      min-height: 600px;
+    }
+    .palace-cell {
+      background: #fff;
+      border: 1px solid #d5c8b2;
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .palace-cell:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      border-color: var(--primary);
+    }
+    .palace-title {
+      font-weight: bold;
+      color: var(--primary);
+      font-size: 1.05rem;
+      border-bottom: 1px dashed var(--border);
+      padding-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .palace-branch {
+      font-size: 0.85rem;
+      color: var(--gold-dark);
+    }
+    .major-stars {
+      color: #b33939;
+      font-weight: bold;
+      font-size: 0.95rem;
+      margin: 6px 0;
+    }
+    .minor-stars {
+      color: #333;
+      font-size: 0.85rem;
+      margin-top: 4px;
+      line-height: 1.3;
+    }
+    .brightness-tag {
+      font-size: 0.75rem;
+      color: #27ae60;
+      font-weight: normal;
+    }
+    .mutagen-tag {
+      background: #f39c12;
+      color: #fff;
+      padding: 1px 4px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      margin-left: 2px;
+    }
+    .center-info {
+      grid-column: 2 / span 2;
+      grid-row: 2 / span 2;
+      background: #faf7f2;
+      border: 2px solid var(--gold);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      text-align: center;
+    }
+    .center-info h3 {
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .reading-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+    .reading-card h3 {
+      color: var(--primary);
+      border-left: 5px solid var(--gold);
+      padding-left: 12px;
+      font-size: 1.25rem;
+      margin-bottom: 12px;
+    }
+    .reading-content {
+      line-height: 1.8;
+      font-size: 1rem;
+    }
+    .star-item {
+      margin-bottom: 8px;
+      padding-left: 6px;
+    }
+    .print-btn {
+      background: #27ae60;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-bottom: 15px;
+      float: right;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #888;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>TỬ VI ĐẨU SỐ 247</h1>
+    <p>Hệ Thống An Sao & Luận Giải Mệnh Bàn Chuẩn Xác 24/7</p>
+  </div>
+
+  <div class="input-card">
+    <form id="tuvi-form">
+      <div class="input-grid">
+        <div class="form-group">
+          <label>Họ và Tên</label>
+          <input type="text" id="fullname" placeholder="Nguyễn Văn A" value="Đương Số" required>
+        </div>
+        <div class="form-group">
+          <label>Giới Tính</label>
+          <select id="gender">
+            <option value="male">Nam (Dương Nam / Âm Nam)</option>
+            <option value="female">Nữ (Dương Nữ / Âm Nữ)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Ngày Sinh Dương Lịch</label>
+          <input type="date" id="birthdate" value="1995-10-25" required>
+        </div>
+        <div class="form-group">
+          <label>Giờ Sinh (Theo Can Chi)</label>
+          <select id="birthhour">
+            <option value="0">Tý Sớm (23:00 - 00:59)</option>
+            <option value="1">Sửu (01:00 - 02:59)</option>
+            <option value="2">Dần (03:00 - 04:59)</option>
+            <option value="3">Mão (05:00 - 06:59)</option>
+            <option value="4">Thìn (07:00 - 08:59)</option>
+            <option value="5">Tỵ (09:00 - 10:59)</option>
+            <option value="6" selected>Ngọ (11:00 - 12:59)</option>
+            <option value="7">Mùi (13:00 - 14:59)</option>
+            <option value="8">Thân (15:00 - 16:59)</option>
+            <option value="9">Dậu (17:00 - 18:59)</option>
+            <option value="10">Tuất (19:00 - 20:59)</option>
+            <option value="11">Hợi (21:00 - 22:59)</option>
+            <option value="12">Tý Muộn (23:00 - 23:59)</option>
+          </select>
+        </div>
+        <div>
+          <button type="submit" class="btn-submit" style="width: 100%;">LẬP LÁ SỐ & LUẬN GIẢI</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div id="result-section" class="result-section">
+    <button class="print-btn" onclick="window.print()">In Lá Số / Xuất PDF</button>
+    <div style="clear: both;"></div>
+
+    <div class="overview-banner">
+      <h2>THÔNG TIN BẢN MỆNH & BÁT TỰ</h2>
+      <div class="overview-grid" id="overview-content"></div>
+    </div>
+
+    <h2 style="color: var(--primary); margin-bottom: 15px;">BẢNG MỆNH BÀN 12 CUNG ĐỊA BÀN</h2>
+    <div class="chart-container">
+      <div class="chart-grid" id="chart-grid"></div>
+    </div>
+
+    <h2 style="color: var(--primary); margin-bottom: 15px;">LUẬN GIẢI CHI TIẾT TỪNG CUNG SỐ</h2>
+    <div id="detailed-readings"></div>
+  </div>
+
+  <footer>
+    <p>© TUVI247 - Chạy trực tiếp 100% trên GitHub Pages | Bản quyền mã nguồn mở iztro</p>
+  </footer>
+</div>
+
+<script>
+  const PALACE_LAYOUT_MAP = {
+    "Tỵ": { row: 1, col: 1 },
+    "Ngọ": { row: 1, col: 2 },
+    "Mùi": { row: 1, col: 3 },
+    "Thân": { row: 1, col: 4 },
+    "Thìn": { row: 2, col: 1 },
+    "Dậu": { row: 2, col: 4 },
+    "Mão": { row: 3, col: 1 },
+    "Tuất": { row: 3, col: 4 },
+    "Dần": { row: 4, col: 1 },
+    "Sửu": { row: 4, col: 2 },
+    "Tý": { row: 4, col: 3 },
+    "Hợi": { row: 4, col: 4 }
+  };
+
+  document.getElementById('tuvi-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const fullname = document.getElementById('fullname').value;
+    const gender = document.getElementById('gender').value;
+    const birthdate = document.getElementById('birthdate').value;
+    const birthhour = parseInt(document.getElementById('birthhour').value);
+
+    try {
+      // Gọi trực tiếp thư viện iztro trên trình duyệt (Client-side, không cần server)
+      const astrolabe = iztro.astro.bySolar(birthdate, birthhour, gender, true, 'vi-VN');
+      const data = analyzeAstrolabe(astrolabe);
+      renderResult(data, fullname);
+    } catch (err) {
+      alert("Lỗi khi an sao lá số: " + err.message);
+    }
+  });
+
+  function renderResult(data, fullname) {
+    document.getElementById('result-section').style.display = 'block';
+    const ov = data.overview;
+
+    document.getElementById('overview-content').innerHTML = `
+      <div class="overview-item"><span>Họ tên:</span> ${fullname} (${ov.gender})</div>
+      <div class="overview-item"><span>Dương lịch:</span> ${ov.solarDate} (${ov.time})</div>
+      <div class="overview-item"><span>Âm lịch:</span> ${ov.lunarDate}</div>
+      <div class="overview-item"><span>Bát tự can chi:</span> ${ov.chineseDate}</div>
+      <div class="overview-item"><span>Cục mệnh:</span> ${ov.fiveElementsClass}</div>
+      <div class="overview-item"><span>Cung Thân cư:</span> Cung ${ov.earthlyBranchOfBodyPalace}</div>
+      <div class="overview-item"><span>Mệnh chủ:</span> ${ov.soul}</div>
+      <div class="overview-item"><span>Thân chủ:</span> ${ov.body}</div>
+      <div class="overview-item"><span>Chòm sao:</span> ${ov.sign} - Tuổi ${ov.zodiac}</div>
+    `;
+
+    const grid = document.getElementById('chart-grid');
+    grid.innerHTML = `
+      <div class="center-info">
+        <h3>${fullname}</h3>
+        <p style="font-size: 0.95rem; color: #555;"><b>${ov.chineseDate}</b></p>
+        <p style="color: var(--primary); font-weight: bold; margin-top: 6px;">${ov.fiveElementsClass}</p>
+        <p style="font-size: 0.85rem; margin-top: 6px;">Mệnh chủ: <b>${ov.soul}</b> | Thân chủ: <b>${ov.body}</b></p>
+      </div>
+    `;
+
+    data.palaces.forEach(palace => {
+      const pos = PALACE_LAYOUT_MAP[palace.branch] || { row: 1, col: 1 };
+      const cell = document.createElement('div');
+      cell.className = 'palace-cell';
+      cell.style.gridRow = pos.row;
+      cell.style.gridColumn = pos.col;
+
+      let majorHtml = '';
+      if (palace.majorStars && palace.majorStars.length > 0) {
+        majorHtml = palace.majorStars.map(s => {
+          let b = s.brightness ? `<span class="brightness-tag">(${s.brightness})</span>` : '';
+          let m = s.mutagen ? `<span class="mutagen-tag">Hóa ${s.mutagen}</span>` : '';
+          return `<div>• ${s.name} ${b} ${m}</div>`;
+        }).join('');
+      } else {
+        majorHtml = `<div style="color: #888; font-style: italic;">(Vô Chính Diệu)</div>`;
+      }
+
+      let minorHtml = '';
+      if (palace.minorStars && palace.minorStars.length > 0) {
+        minorHtml = palace.minorStars.slice(0, 5).map(s => s.name).join(', ');
+        if (palace.minorStars.length > 5) minorHtml += '...';
+      }
+
+      cell.innerHTML = `
+        <div class="palace-title">
+          <span>${palace.name}</span>
+          <span class="palace-branch">${palace.stem} ${palace.branch}</span>
+        </div>
+        <div class="major-stars">${majorHtml}</div>
+        <div class="minor-stars">${minorHtml}</div>
+        <div style="margin-top: auto; font-size: 0.75rem; color: #777; display: flex; justify-content: space-between;">
+          <span>Đại hạn: ${palace.decadal ? palace.decadal.range[0] + '-' + palace.decadal.range[1] : ''}</span>
+          <span>${palace.changsheng12 || ''}</span>
+        </div>
+      `;
+
+      cell.addEventListener('click', () => {
+        const el = document.getElementById('palace-reading-' + palace.branch);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      });
+
+      grid.appendChild(cell);
+    });
+
+    const readingsDiv = document.getElementById('detailed-readings');
+    readingsDiv.innerHTML = '';
+
+    data.palaces.forEach(palace => {
+      const card = document.createElement('div');
+      card.className = 'reading-card';
+      card.id = 'palace-reading-' + palace.branch;
+
+      let majorsContent = '';
+      if (palace.majorExplanations && palace.majorExplanations.length > 0) {
+        majorsContent = `
+          <div style="margin-top: 10px;">
+            <b style="color: var(--primary);">Chính Tinh Tọa Thủ & Luận Giải:</b>
+            <div style="margin-top: 6px;">
+              ${palace.majorExplanations.map(m => `<div class="star-item">${m}</div>`).join('')}
+            </div>
+          </div>
+        `;
+      } else {
+        majorsContent = `
+          <div style="margin-top: 10px; color: #555;">
+            <b>Cung Vô Chính Diệu:</b> Cung vị không có chính tinh trực chiếu, tính cách và hoàn cảnh biến hóa đa dạng, dễ bị ảnh hưởng bởi môi trường xung quanh và cung xung chiếu đối diện.
+          </div>
+        `;
+      }
+
+      let minorsContent = '';
+      if (palace.minorExplanations && palace.minorExplanations.length > 0) {
+        minorsContent = `
+          <div style="margin-top: 12px;">
+            <b style="color: var(--gold-dark);">Phụ Tinh, Trợ Tinh & Cát Hung Tinh:</b>
+            <div style="margin-top: 6px; font-size: 0.95rem;">
+              ${palace.minorExplanations.map(m => `<div class="star-item">${m}</div>`).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      card.innerHTML = `
+        <h3>CUNG ${palace.name.toUpperCase()} (Tọa tại ${palace.stem} ${palace.branch})</h3>
+        <div class="reading-content">
+          <p style="font-style: italic; color: #666; margin-bottom: 8px;"><b>Ý nghĩa cung vị:</b> ${palace.meaning}</p>
+          <p><b>Tổng quan:</b> ${palace.summary}</p>
+          ${majorsContent}
+          ${minorsContent}
+        </div>
+      `;
+      readingsDiv.appendChild(card);
+    });
+
+    document.getElementById('result-section').scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
