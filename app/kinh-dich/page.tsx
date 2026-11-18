@@ -56,7 +56,7 @@ export default function KinhDichPage() {
    <div className="iching-results"><HexagramCard hexagram={result.primary} label="BẢN QUẺ" moving={result.moving} primary/><HexagramCard hexagram={result.changed} label="BIẾN QUẺ"/></div>
    <div className="reading-box"><h4>Quy tắc đọc quẻ theo Chu Hy</h4><p>{reading.guide}</p><p>Số hào động: <strong>{reading.movingCount}</strong>{reading.lineNumbers.length?' · Hào được chọn: '+reading.lineNumbers.join(', '):''}{reading.primaryWeight?' · Trọng số bản quẻ: 70%':''}</p>{reading.texts.map((t,i)=><p className="classical-text" key={i}><strong>{t.source==='primary'?'Bản quẻ':t.source==='changed'?'Biến quẻ':'Cả hai'}{t.type==='guaCi'?' · Quái từ':t.type==='yaoCi'?' · Hào '+t.line:' · Dụng từ'}:</strong> {t.text}</p>)}</div>
    {vietnamese?<section className="vi-reading" aria-label="Luận giải tiếng Việt">
-    <div className="vi-reading-head"><span className="kicker">LUẬN GIẢI TIẾNG VIỆT · DỰA TRÊN BẢN QUẺ VÀ HÀO ĐỘNG</span><h3>Luận giải tập trung vào câu hỏi</h3><p>{vietnamese.topicNote}</p><span className="vi-topic">{vietnamese.topicLabel}</span></div>
+    <div className="vi-reading-head"><span className="kicker">LUẬN GIẢI TIẾNG VIỆT · DỰA TRÊN BẢN QUẺ VÀ HÀO ĐỘNG</span><h3>Luận giải tập trung vào câu hỏi</h3><p>{vietnamese.questionNote}</p><span className="vi-topic">{vietnamese.topicLabel}</span></div>
     <div className="vi-answer"><small>TRẢ LỜI TRỌNG TÂM</small><p>{vietnamese.answer}</p></div>
     <div className="vi-reading-grid">
      <article><h4>Ý nghĩa tổng quát của bản quẻ</h4><p>{vietnamese.core}</p></article>
