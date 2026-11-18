@@ -78,3 +78,12 @@ test('empty palace borrows only as reference and does not relabel borrowed stars
   assert.match(result.starSynthesis,/không phải sao tọa thủ/);
   assert.ok(result.cautions.some(x=>x.includes('Không coi vô chính diệu')));
 });
+
+test('all twelve palace lenses return context instead of a generic star paragraph', () => {
+  const chart = makeChart();
+  for (const palace of chart.palaces) {
+    const text = interpretStar({name:'紫微',type:'major'},palace.name);
+    assert.ok(text.includes('Trong cung ' + palace.name), 'missing palace lens: ' + palace.name);
+    assert.ok(text.length > 180, 'interpretation too short for ' + palace.name);
+  }
+});
