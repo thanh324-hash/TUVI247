@@ -151,7 +151,7 @@ export default function Home() {
   } catch(err){setError(err instanceof Error?err.message:'Không thể lập lá số. Vui lòng kiểm tra thông tin.');}
  }
  return <main className="shell">
-  <header className="topbar"><a className="brand" href="#"><span className="seal">紫</span><span><b>TỬ VI 247</b><small>LẬP LÁ SỐ · TRA CỨU · KHÁM PHÁ</small></span></a><span className="top-note">Công cụ Tử Vi Đẩu Số tiếng Việt</span></header>
+  <header className="topbar"><a className="brand" href="/"><span className="seal">紫</span><span><b>TỬ VI 247</b><small>LẬP LÁ SỐ · TRA CỨU · KHÁM PHÁ</small></span></a><nav className="main-nav" aria-label="Điều hướng chính"><a className="nav-link active" href="/">Tử Vi</a><a className="nav-link" href="/kinh-dich/">Kinh Dịch</a></nav><span className="top-note">Công cụ Tử Vi Đẩu Số tiếng Việt</span></header>
   <section className="hero"><span className="kicker">TỬ VI ĐẨU SỐ · HỆ THỐNG LẬP LÁ SỐ</span><h1>Khám phá lá số của bạn<br/><i>qua 12 cung và hệ thống sao</i></h1><p>Lập lá số bằng bộ máy an sao mã nguồn mở; tra cứu chính tinh, phụ tinh, tứ hóa, đại hạn và các cách cục được nhận diện.</p></section>
   <section className="form-panel"><div className="panel-title"><div><span className="kicker">THÔNG TIN ĐẦU VÀO</span><h2>Lập lá số Tử Vi</h2></div><span className="step">01 / 02</span></div>
    <form className="birth-form" onSubmit={submit}>
