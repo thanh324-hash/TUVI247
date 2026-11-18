@@ -1,5 +1,5 @@
-:HL["/_next/static/chunks/1lorcihap6ktm.css","style"]
+:HL["/_next/static/chunks/35biospa0bkm-.css","style"]
 :HL["https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap","style"]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":"/_not-found","h":96,"c":"$Q2"}]]
-0:{"b":"7rjuAg71WyleXyOIlOmP3","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"o9wqFgpw0aEkhHeMPV68D","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
