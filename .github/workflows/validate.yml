@@ -1,7 +1,7 @@
 name: Validate TUVI247
 on:
   push:
-    branches: [main, upgrade/core-sync-2026-11-18]
+    branches: [main, upgrade/core-sync-2026-11-18, upgrade/core-sync-main-sync-2026-11-18]
     paths: ['app/**','lib/ziwei/**','tests/**','package.json','tsconfig.json','next.config.js']
   pull_request:
     branches: [main]
