@@ -5,6 +5,7 @@ import { castCoins } from '@/lib/iching/cast';
 import { read } from '@/lib/iching/reading';
 import { relations } from '@/lib/iching/relations';
 import type { Cast, Hexagram } from '@/lib/iching/types';
+import { buildVietnameseReading } from '@/lib/iching/vietnamese';
 
 const KEYWORDS: Record<string,string> = {
   'Creative':'Sáng tạo, chủ động','Receptive':'Tiếp nhận, thuận theo','Initial Difficulty':'Khởi đầu gian nan','Inexperience':'Non trẻ, cần học hỏi',
@@ -37,6 +38,7 @@ export default function KinhDichPage() {
  const [search,setSearch]=useState('');
  const [selected,setSelected]=useState<Hexagram|null>(null);
  const reading=useMemo(()=>result?read(result):null,[result]);
+ const vietnamese=useMemo(()=>result&&reading?buildVietnameseReading(result,reading,question):null,[result,reading,question]);
  const related=useMemo(()=>result?relations(result.primary):null,[result]);
  const filtered=useMemo(()=>HEXAGRAMS.filter(h=>(h.name+h.pinyin+KEYWORDS[h.keyword]).toLowerCase().includes(search.toLowerCase())),[search]);
  function divineNow(){setResult(castCoins());setSelected(null);}
@@ -53,6 +55,18 @@ export default function KinhDichPage() {
    <div className="coin-values">{result.values.map((v,i)=><div className="coin-value" key={i}><b>{v}</b><span>Hào {i+1} · {v===6?'Lão âm':v===7?'Thiếu dương':v===8?'Thiếu âm':'Lão dương'}</span></div>)}</div>
    <div className="iching-results"><HexagramCard hexagram={result.primary} label="BẢN QUẺ" moving={result.moving} primary/><HexagramCard hexagram={result.changed} label="BIẾN QUẺ"/></div>
    <div className="reading-box"><h4>Quy tắc đọc quẻ theo Chu Hy</h4><p>{reading.guide}</p><p>Số hào động: <strong>{reading.movingCount}</strong>{reading.lineNumbers.length?' · Hào được chọn: '+reading.lineNumbers.join(', '):''}{reading.primaryWeight?' · Trọng số bản quẻ: 70%':''}</p>{reading.texts.map((t,i)=><p className="classical-text" key={i}><strong>{t.source==='primary'?'Bản quẻ':t.source==='changed'?'Biến quẻ':'Cả hai'}{t.type==='guaCi'?' · Quái từ':t.type==='yaoCi'?' · Hào '+t.line:' · Dụng từ'}:</strong> {t.text}</p>)}</div>
+   {vietnamese?<section className="vi-reading" aria-label="Luận giải tiếng Việt">
+    <div className="vi-reading-head"><span className="kicker">LUẬN GIẢI TIẾNG VIỆT · DỰA TRÊN BẢN QUẺ VÀ HÀO ĐỘNG</span><h3>Luận giải tập trung vào câu hỏi</h3><p>{vietnamese.topicNote}</p><span className="vi-topic">{vietnamese.topicLabel}</span></div>
+    <div className="vi-answer"><small>TRẢ LỜI TRỌNG TÂM</small><p>{vietnamese.answer}</p></div>
+    <div className="vi-reading-grid">
+     <article><h4>Ý nghĩa tổng quát của bản quẻ</h4><p>{vietnamese.core}</p></article>
+     <article><h4>Việc nên làm</h4><p>{vietnamese.action}</p></article>
+     <article className="vi-caution"><h4>Điều cần thận trọng</h4><p>{vietnamese.caution}</p></article>
+    </div>
+    {vietnamese.movingInterpretations.length>0?<div className="vi-lines"><h4>Luận theo từng hào động</h4>{vietnamese.movingInterpretations.map(item=><article key={item.line}><b>Hào {item.line} động</b><p>{item.stage}</p><small>Cổ văn nguyên bản: {item.classical}</small></article>)}</div>:<div className="vi-lines"><h4>Không có hào động</h4><p>Đọc trọng tâm ở quái từ của bản quẻ theo quy tắc Chu Hy. Tình thế được xem như chưa xuất hiện biến động ở sáu hào.</p></div>}
+    <div className="vi-transition"><h4>Đối chiếu biến quẻ và các quan hệ</h4><p>{vietnamese.changedNote}</p><p>{vietnamese.nuclearNote}</p></div>
+    <p className="vi-method">{vietnamese.questionNote} Phần này là bản diễn giải tiếng Việt biên soạn theo chủ đề quẻ và vị trí hào; không phải bản dịch cổ văn được trích nguyên văn từ repo.</p>
+   </section>:null}
    {related?<><h3 style={{fontFamily:'Playfair Display,serif',color:'var(--wine-dark)',margin:'22px 0 10px'}}>Các quan hệ của bản quẻ</h3><div className="relations-grid">{[['Quẻ hỗ',related.nuclear],['Quẻ đối',related.opposite],['Quẻ đảo',related.inverse]].map(([label,h])=><div className="relation-item" key={String(label)}><b>{String(label)}</b><HexagramLines hexagram={h as Hexagram}/><span>{(h as Hexagram).name} · số {(h as Hexagram).id}</span></div>)}</div></>:null}
    <details className="classical-details"><summary>Xem toàn bộ quái từ và sáu hào của bản quẻ</summary><p className="line-text"><strong>Quái từ:</strong> {result.primary.guaCi}</p>{result.primary.yaoCi.map((line,i)=><p className="line-text" key={i}><strong>Hào {i+1}{result.moving.includes(i)?' · ĐANG ĐỘNG':''}:</strong> {line}</p>)}</details>
    <details className="classical-details"><summary>Xem toàn bộ quái từ và sáu hào của biến quẻ</summary><p className="line-text"><strong>Quái từ:</strong> {result.changed.guaCi}</p>{result.changed.yaoCi.map((line,i)=><p className="line-text" key={i}><strong>Hào {i+1}:</strong> {line}</p>)}</details>
