@@ -6,7 +6,6 @@ import { analyzePalace, interpretStar } from '../lib/ziwei/interpretation';
 import type { Palace, Star, ZiweiChart } from '../lib/ziwei/types';
 
 const palaceNames = ['命宫','兄弟','夫妻','子女','财帛','疾厄','迁移','仆役','官禄','田宅','福德','父母'];
-const stars = (items: Star[] = []) => items;
 function makeChart(): ZiweiChart {
   const palaces: Palace[] = palaceNames.map((name, branch) => ({
     name, branch, stem: branch % 10, stars: [], oppositeBranch: (branch + 6) % 12,
@@ -24,13 +23,12 @@ function makeChart(): ZiweiChart {
   palaces[0].selfSihua = [{starName:'紫微',siHua:'权'}];
   return {
     birthInfo:{year:1995,month:10,day:25,hour:6,gender:'male'},
-    lunarInfo:{lunarYear:1995,lunarMonth:9,lunarDay:1,yearStem:1,yearBranch:亥Index(),isLeapMonth:false},
+    lunarInfo:{lunarYear:1995,lunarMonth:9,lunarDay:1,yearStem:1,yearBranch:11,isLeapMonth:false},
     mingGongBranch:0,shenGongBranch:4,wuxingJu:2,wuxingJuName:'水二局',ziweiPos:0,
     palaces,daXians:[{startAge:24,endAge:33,palaceBranch:0,palaceName:'命宫',siHua:{stemIndex:0,stemName:'甲',lu:'廉贞',quan:'破军',ke:'武曲',ji:'太阳'}}],
     currentAge:31,currentDaXianIndex:0,mingZhu:'贪狼',shenZhu:'天相',
   };
 }
-function 亥Index(){ return 11; }
 
 test('solar/lunar conversion preserves known new-year and leap-month dates', () => {
   assert.deepEqual(lunarToSolar(2024,1,1),{year:2024,month:2,day:10});
