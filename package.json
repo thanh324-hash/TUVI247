@@ -1,1 +1,25 @@
-{"name":"tuvi247","version":"2.0.0","private":true,"scripts":{"dev":"next dev","build":"next build","typecheck":"tsc --noEmit"},"dependencies":{"iztro":"^2.5.8","lunar-javascript":"^1.7.3","next":"^16.4.3","react":"^19.2.5","react-dom":"^19.2.5"},"devDependencies":{"@types/node":"^22.0.0","@types/react":"^19.0.0","@types/react-dom":"^19.0.0","typescript":"^5.8.0"}}
+{
+  "name": "tuvi247",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "typecheck": "tsc --noEmit",
+    "test:regression": "tsx --test tests/ziwei-regression.test.ts"
+  },
+  "dependencies": {
+    "iztro": "^2.5.8",
+    "lunar-javascript": "^1.7.3",
+    "next": "^16.4.3",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.8.0",
+    "tsx": "^4.20.6"
+  }
+}
