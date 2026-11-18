@@ -1,4 +1,5 @@
-import type { Cast, Reading } from "./types";
+import type { Cast, Reading, Hexagram } from "./types";
+import { LEGGE_REFERENCE } from "./data/legge";
 
 type Topic = "love" | "work" | "money" | "family" | "study" | "travel" | "general";
 type Meaning = { core: string; action: string; caution: string; topics: Record<Topic, string> };
@@ -88,13 +89,39 @@ function classify(question: string): Topic {
 }
 
 const LINE_STAGES = [
-  "Giai đoạn khởi đầu: xem nền tảng, động cơ và điều kiện ban đầu đã đủ chưa.",
-  "Giai đoạn đặt nền: chú trọng cách làm, năng lực và sự phối hợp với người liên quan.",
-  "Giai đoạn giữa đường: kiểm tra rủi ro, tránh chủ quan và điều chỉnh nếu xuất hiện dấu hiệu lệch hướng.",
-  "Giai đoạn chuyển tiếp: cân nhắc thời điểm, vị thế và cách chuyển từ chuẩn bị sang hành động.",
-  "Giai đoạn trách nhiệm cao: quyết định cần công bằng, minh bạch và tính đến ảnh hưởng rộng hơn.",
-  "Giai đoạn cuối: tổng kết hệ quả, biết điểm dừng và chuẩn bị cho chu kỳ tiếp theo."
-];
+  {name:"Sơ hào · Khởi đầu",focus:"Điều kiện mới hình thành; việc cần làm là quan sát nền tảng và kiểm soát bước mở đầu.",good:"Một khởi đầu nhỏ, đúng thời và có chuẩn bị có thể tạo nền vững.",risk:"Tiến quá sớm khi chưa đủ lực dễ khiến sai lệch ban đầu kéo dài.",next:"Kiểm tra nguồn lực, động cơ và thông tin trước khi cam kết."},
+  {name:"Nhị hào · Đặt nền",focus:"Tình thế bắt đầu có hình dạng; năng lực thực tế, cách phối hợp và sự chính đáng trở nên quan trọng.",good:"Làm đúng vai, giữ sự ổn định và tìm người phối hợp phù hợp sẽ tạo tiến triển.",risk:"Tranh vị trí hoặc bỏ qua quy trình có thể làm mất sự tin cậy.",next:"Củng cố năng lực, làm rõ trách nhiệm và phối hợp với người liên quan."},
+  {name:"Tam hào · Ngưỡng rủi ro",focus:"Đây là vị trí chuyển tiếp dễ phát sinh quá đà, mâu thuẫn hoặc sai lầm do thiếu thận trọng.",good:"Nhận ra dấu hiệu bất lợi sớm giúp điều chỉnh trước khi tổn thất lớn.",risk:"Cố tiến bằng ý chí đơn thuần hoặc không biết dừng có thể dẫn đến hối tiếc.",next:"Rà soát giả định, kiểm chứng dữ kiện và sẵn sàng đổi hướng."},
+  {name:"Tứ hào · Chuyển tiếp",focus:"Đang ở ranh giới giữa bên trong và bên ngoài, giữa chuẩn bị và hành động; cách chọn vị trí rất quan trọng.",good:"Thăm dò có kiểm soát, chọn đúng thời điểm và giữ khả năng quay lại sẽ giảm rủi ro.",risk:"Do dự kéo dài hoặc nhảy bước thiếu chuẩn bị đều có thể làm lỡ thời cơ.",next:"Thử ở quy mô nhỏ, xác định điều kiện dừng và quan sát phản hồi."},
+  {name:"Ngũ hào · Trọng tâm trách nhiệm",focus:"Vị trí trung tâm của quẻ, thường gắn với quyền quyết định, trách nhiệm và ảnh hưởng tới nhiều bên.",good:"Quyết định có đức độ, minh bạch và đúng năng lực có thể đem lại kết quả bền.",risk:"Lạm quyền, tự mãn hoặc chỉ nhìn lợi ích trước mắt sẽ làm suy yếu thành quả.",next:"Cân nhắc lợi ích các bên, công khai tiêu chí và chịu trách nhiệm về quyết định."},
+  {name:"Thượng hào · Cuối chu kỳ",focus:"Tình thế đi tới giới hạn hoặc kết thúc một chu kỳ; cần nhìn hệ quả và biết khi nào nên dừng.",good:"Tổng kết, sửa sai và chuẩn bị cho chu kỳ kế tiếp giúp giữ phần thành quả còn giá trị.",risk:"Cố kéo dài điều đã quá mức có thể biến thành quả thành tổn thất.",next:"Đánh giá kết quả thực tế, khép việc đúng lúc và tránh quyết định cực đoan."}
+] as const;
+
+const leggeHexagrams = LEGGE_REFERENCE.hexagrams as Record<string, {
+  judgment: string; image: string; lines: Record<string, string>
+}>;
+
+function interpretLine(hexagram: Hexagram, line: number, source: "primary" | "changed", topic: Topic) {
+  const meaning = MEANINGS[hexagram.id - 1];
+  const stage = LINE_STAGES[line - 1];
+  const yang = hexagram.lines[line - 1] === 1;
+  const english = leggeHexagrams[String(hexagram.id)]?.lines[String(line)] ?? "";
+  return {
+    line,
+    source,
+    sourceLabel: source === "primary" ? "Quẻ chủ" : "Quẻ biến",
+    hexagramName: hexagram.name,
+    position: stage.name,
+    lineNature: yang ? "Hào dương (九)" : "Hào âm (六)",
+    stage: stage.focus,
+    classical: hexagram.yaoCi[line - 1],
+    english,
+    interpretation: meaning.core + " " + stage.good + " " + stage.risk,
+    topicAdvice: meaning.topics[topic],
+    action: stage.next + " " + meaning.action,
+    caution: stage.risk + " " + meaning.caution
+  };
+}
 
 export function buildVietnameseReading(cast: Cast, reading: Reading, question: string) {
   const meaning = MEANINGS[cast.primary.id - 1];
@@ -103,11 +130,12 @@ export function buildVietnameseReading(cast: Cast, reading: Reading, question: s
   const sourceTexts = reading.texts.map(item => ({
     source: item.source, type: item.type, line: item.line, text: item.text
   }));
-  const movingInterpretations = movingLines.map(line => ({
-    line,
-    stage: LINE_STAGES[line - 1],
-    classical: cast.primary.yaoCi[line - 1]
-  }));
+  const movingInterpretations = reading.texts
+    .filter(item => item.type === "yaoCi" && item.line !== undefined)
+    .map(item => {
+      const hexagram = item.source === "changed" ? cast.changed : cast.primary;
+      return interpretLine(hexagram, item.line!, item.source === "changed" ? "changed" : "primary", topic);
+    });
   return {
     topic,
     topicLabel: TOPIC_LABEL[topic],
