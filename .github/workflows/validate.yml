@@ -5,7 +5,7 @@ on:
     paths: ['app/**','lib/ziwei/**','tests/**','package.json','tsconfig.json','next.config.js']
   pull_request:
     branches: [main]
-    paths: ['app/**','lib/ziwei/**','package.json','tsconfig.json','next.config.js']
+    paths: ['app/**','lib/ziwei/**','tests/**','package.json','tsconfig.json','next.config.js']
   workflow_dispatch:
 jobs:
   validate:
