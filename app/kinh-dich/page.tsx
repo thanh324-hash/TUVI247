@@ -63,9 +63,16 @@ export default function KinhDichPage() {
      <article><h4>Việc nên làm</h4><p>{vietnamese.action}</p></article>
      <article className="vi-caution"><h4>Điều cần thận trọng</h4><p>{vietnamese.caution}</p></article>
     </div>
-    {vietnamese.movingInterpretations.length>0?<div className="vi-lines"><h4>Luận theo từng hào động</h4>{vietnamese.movingInterpretations.map(item=><article key={item.line}><b>Hào {item.line} động</b><p>{item.stage}</p><small>Cổ văn nguyên bản: {item.classical}</small></article>)}</div>:<div className="vi-lines"><h4>Không có hào động</h4><p>Đọc trọng tâm ở quái từ của bản quẻ theo quy tắc Chu Hy. Tình thế được xem như chưa xuất hiện biến động ở sáu hào.</p></div>}
+    {vietnamese.movingInterpretations.length>0?<div className="vi-lines"><h4>Các hào được chọn theo quy tắc Chu Hy</h4>{vietnamese.movingInterpretations.map(item=><article key={item.source+item.hexagramName+item.line}>
+      <b>{item.sourceLabel} · {item.hexagramName} · Hào {item.line}</b><p><strong>{item.position}</strong> — {item.lineNature}</p>
+      <p>{item.interpretation}</p><p><strong>Áp dụng cho câu hỏi:</strong> {item.topicAdvice}</p>
+      <p><strong>Hướng hành động:</strong> {item.action}</p><p><strong>Điều cần tránh:</strong> {item.caution}</p>
+      <small>Nguyên văn: {item.classical}</small><small>Đối chiếu bản dịch James Legge (1882): {item.english}</small>
+     </article>)}</div>:<div className="vi-lines"><h4>Đọc quái từ theo quy tắc Chu Hy</h4>{vietnamese.sourceTexts.map((item,i)=><article key={i}>
+      <b>{item.sourceLabel} · {item.type==="yong"?"Dụng từ đặc biệt": "Quái từ"}</b><p>{item.text}</p>{item.english?<small>Đối chiếu bản dịch James Legge (1882): {item.english}</small>:null}
+     </article>)}</div>}
     <div className="vi-transition"><h4>Đối chiếu biến quẻ và các quan hệ</h4><p>{vietnamese.changedNote}</p><p>{vietnamese.nuclearNote}</p></div>
-    <p className="vi-method">{vietnamese.questionNote} Phần này là bản diễn giải tiếng Việt biên soạn theo chủ đề quẻ và vị trí hào; không phải bản dịch cổ văn được trích nguyên văn từ repo.</p>
+    <p className="vi-method">{vietnamese.questionNote} {vietnamese.sourceNote}</p>
    </section>:null}
    {related?<><h3 style={{fontFamily:'Playfair Display,serif',color:'var(--wine-dark)',margin:'22px 0 10px'}}>Các quan hệ của bản quẻ</h3><div className="relations-grid">{[['Quẻ hỗ',related.nuclear],['Quẻ đối',related.opposite],['Quẻ đảo',related.inverse]].map(([label,h])=><div className="relation-item" key={String(label)}><b>{String(label)}</b><HexagramLines hexagram={h as Hexagram}/><span>{(h as Hexagram).name} · số {(h as Hexagram).id}</span></div>)}</div></>:null}
    <details className="classical-details"><summary>Xem toàn bộ quái từ và sáu hào của bản quẻ</summary><p className="line-text"><strong>Quái từ:</strong> {result.primary.guaCi}</p>{result.primary.yaoCi.map((line,i)=><p className="line-text" key={i}><strong>Hào {i+1}{result.moving.includes(i)?' · ĐANG ĐỘNG':''}:</strong> {line}</p>)}</details>
