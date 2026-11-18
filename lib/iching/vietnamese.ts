@@ -127,9 +127,16 @@ export function buildVietnameseReading(cast: Cast, reading: Reading, question: s
   const meaning = MEANINGS[cast.primary.id - 1];
   const topic = classify(question);
   const movingLines = cast.moving.map(index => index + 1);
-  const sourceTexts = reading.texts.map(item => ({
-    source: item.source, type: item.type, line: item.line, text: item.text
-  }));
+  const sourceTexts = reading.texts.map(item => {
+    const sourceHexagram = item.source === "changed" ? cast.changed : cast.primary;
+    const reference = leggeHexagrams[String(sourceHexagram.id)];
+    return {
+      source: item.source,
+      sourceLabel: item.source === "primary" ? "Quẻ chủ" : "Quẻ biến",
+      type: item.type, line: item.line, text: item.text,
+      english: item.type === "guaCi" ? reference?.judgment ?? "" : item.type === "yaoCi" && item.line ? reference?.lines[String(item.line)] ?? "" : ""
+    };
+  });
   const movingInterpretations = reading.texts
     .filter(item => item.type === "yaoCi" && item.line !== undefined)
     .map(item => {
@@ -146,6 +153,11 @@ export function buildVietnameseReading(cast: Cast, reading: Reading, question: s
     movingLines,
     movingInterpretations,
     sourceTexts,
+    primaryLeggeJudgment: leggeHexagrams[String(cast.primary.id)]?.judgment ?? "",
+    changedLeggeJudgment: leggeHexagrams[String(cast.changed.id)]?.judgment ?? "",
+    primaryLeggeImage: leggeHexagrams[String(cast.primary.id)]?.image ?? "",
+    changedLeggeImage: leggeHexagrams[String(cast.changed.id)]?.image ?? "",
+    sourceNote: "Đối chiếu tiếng Anh: James Legge, The Yî King (1882), bản dịch thuộc phạm vi công cộng. Phần tiếng Việt là diễn giải ứng dụng biên soạn riêng, không phải bản dịch nguyên văn của Legge hay Chu Hy.",
     changedNote: "Biến quẻ biểu thị hướng chuyển dịch của tình thế sau các hào động. Hãy dùng nó để đối chiếu xu hướng, không xem như một kết luận độc lập hoặc lời tiên đoán chắc chắn.",
     nuclearNote: "Quẻ hỗ gợi ý cấu trúc hoặc động lực bên trong; quẻ đối và quẻ đảo là góc nhìn bổ trợ. Đây không phải các căn cứ thay thế quy tắc chọn lời hào.",
     questionNote: question.trim() ? "Phần trả lời theo lĩnh vực được chọn tự động từ từ khóa trong câu hỏi; hãy kiểm tra nhãn lĩnh vực và tự đối chiếu hoàn cảnh cụ thể." : "Bạn chưa nhập câu hỏi cụ thể nên phần ứng dụng đang ở mức tổng quát."
