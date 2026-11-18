@@ -167,6 +167,43 @@ const STAR_FUNCTION: Record<string, string> = {
   '七杀':'quyết định trong áp lực và hành động dứt khoát', '破军':'đổi mới, tháo bỏ cái cũ và tái cấu trúc'
 };
 
+
+
+type StarTendency = { potential: string; risk: string; practice: string };
+const STAR_TENDENCIES: Record<string, StarTendency> = {
+  '紫微': {potential:'đứng ra tổ chức, điều phối và chịu trách nhiệm',risk:'ôm quyền, khó giao việc hoặc đặt kỳ vọng cao lên người khác',practice:'phân quyền rõ và đánh giá bằng kết quả thay vì kiểm soát từng bước'},
+  '天机': {potential:'phân tích tình huống, học nhanh và tìm nhiều phương án',risk:'đổi ý liên tục, phân tán hoặc chậm quyết định vì cân nhắc quá nhiều',practice:'giới hạn số phương án và đặt thời hạn ra quyết định'},
+  '太阳': {potential:'chủ động, công khai, dẫn dắt và tạo ảnh hưởng',risk:'làm quá sức hoặc phụ thuộc vào sự ghi nhận',practice:'giữ ranh giới trách nhiệm và phân bổ sức lực bền vững'},
+  '武曲': {potential:'làm việc thực tế, kỷ luật và quản lý nguồn lực',risk:'quá cứng, thiên về hiệu quả mà bỏ qua yếu tố con người',practice:'kết hợp chỉ tiêu định lượng với trao đổi và phản hồi'},
+  '天同': {potential:'thích nghi, hòa giải và tạo môi trường dễ hợp tác',risk:'né xung đột, trì hoãn việc khó hoặc chọn an toàn quá mức',practice:'xử lý bất đồng sớm và duy trì mục tiêu cụ thể'},
+  '廉贞': {potential:'giữ nguyên tắc, nhận diện ranh giới và tạo dấu ấn cá nhân',risk:'phản ứng mạnh khi bị đánh giá hoặc vướng vào tranh chấp quyền lợi',practice:'minh bạch thỏa thuận và tách cảm xúc khỏi quyết định'},
+  '天府': {potential:'quản trị, tích lũy và duy trì nguồn lực ổn định',risk:'quá thận trọng, chậm đổi mới hoặc giữ cách làm đã lỗi thời',practice:'định kỳ rà soát hiệu quả và dành nguồn lực cho cải tiến'},
+  '太阴': {potential:'quan sát kỹ, chăm lo chi tiết và lập kế hoạch dài hạn',risk:'lo xa, giữ cảm xúc trong lòng hoặc chần chừ khi thiếu chắc chắn',practice:'kiểm chứng dữ liệu, chia nhỏ quyết định và trao đổi nhu cầu rõ ràng'},
+  '贪狼': {potential:'kết nối, giao tiếp, khám phá cơ hội và thích ứng xã hội',risk:'phân tán, chạy theo trải nghiệm hoặc mở rộng quá khả năng',practice:'chọn ưu tiên, đặt giới hạn nguồn lực và duy trì cam kết'},
+  '巨门': {potential:'nghiên cứu, chất vấn, diễn đạt và phát hiện điểm chưa hợp lý',risk:'tranh luận kéo dài, hiểu lầm hoặc biến phản biện thành đối đầu',practice:'nêu dữ kiện, thống nhất định nghĩa và xác nhận lại thỏa thuận'},
+  '天相': {potential:'phối hợp, cân bằng quyền lợi và giữ quy trình công bằng',risk:'chiều lòng nhiều phía hoặc ngại tự đưa ra quyết định',practice:'xác định nguyên tắc không thỏa hiệp và phạm vi trách nhiệm'},
+  '天梁': {potential:'hướng dẫn, cố vấn, bảo trợ và xử lý việc cần kinh nghiệm',risk:'bao bọc quá mức, bảo thủ hoặc gánh thay trách nhiệm của người khác',practice:'hỗ trợ có giới hạn và để người liên quan tự chịu trách nhiệm'},
+  '七杀': {potential:'quyết đoán, xử lý tình huống áp lực và thúc đẩy hành động',risk:'nóng vội, chấp nhận rủi ro lớn hoặc hành động khi thiếu dữ liệu',practice:'dùng quy trình kiểm soát rủi ro và có phương án dự phòng'},
+  '破军': {potential:'đổi mới, tái cấu trúc và dám thay cách làm không còn hiệu quả',risk:'phá bỏ quá nhanh, thiếu ổn định hoặc không tính chi phí chuyển đổi',practice:'thử nghiệm theo giai đoạn và đặt tiêu chí dừng/tiếp tục'}
+};
+
+type PalaceLens = { reading: string; practical: string[]; boundary: string };
+const PALACE_LENSES: Record<string, PalaceLens> = {
+  '命宫': {reading:'cách tự quyết, phản ứng trước áp lực, tổ chức cuộc sống và sử dụng năng lực cá nhân',practical:['Đối chiếu nhận định với hành vi lặp lại trong công việc và đời sống','Chọn một năng lực chủ đạo để rèn thành kỹ năng có thể kiểm chứng'],boundary:'Không dùng một cung để kết luận toàn bộ tính cách hay số phận.'},
+  '兄弟': {reading:'cách duy trì quan hệ anh chị em, chia sẻ nguồn lực, trao đổi và phân định trách nhiệm',practical:['Thỏa thuận rõ việc chung, tài sản chung và trách nhiệm chăm sóc','Không suy đoán tính cách hoặc số phận của anh chị em từ lá số của một người'],boundary:'Cung này không thay thế lá số riêng của từng người thân.'},
+  '夫妻': {reading:'kỳ vọng khi chọn người đồng hành, cách giao tiếp, phân chia trách nhiệm và xử lý bất đồng',practical:['Trao đổi sớm về tài chính, gia đình, ranh giới và mục tiêu sống','Đánh giá quan hệ qua hành vi thực tế, sự tôn trọng và khả năng cùng giải quyết vấn đề'],boundary:'Không thể xác định chắc chắn ngoại hình, nghề nghiệp, thời điểm kết hôn hay chung thủy của bạn đời.'},
+  '子女': {reading:'cách chăm sóc, hướng dẫn, trao truyền kinh nghiệm và vun đắp dự án dài hạn',practical:['Điều chỉnh cách hướng dẫn theo nhu cầu từng cá nhân','Chia mục tiêu dài hạn thành các mốc chăm sóc và phát triển cụ thể'],boundary:'Không dùng cung này để kết luận khả năng sinh sản, giới tính hay sức khỏe của trẻ.'},
+  '财帛': {reading:'cách tạo thu nhập, dòng tiền, tích lũy, chi tiêu và phân bổ rủi ro tài chính',practical:['Theo dõi dòng tiền vào/ra và xây quỹ dự phòng trước khi đầu tư','Phân biệt khả năng kiếm tiền với khả năng giữ tiền và quản trị nợ'],boundary:'Không suy ra mức giàu nghèo hoặc khuyến nghị đầu tư chỉ từ một cung.'},
+  '疾厄': {reading:'thói quen sinh hoạt, cách phân bổ sức lực, phản ứng với căng thẳng và ý thức chăm sóc thân tâm',practical:['Duy trì lịch ngủ, vận động và khám sức khỏe theo khuyến nghị y khoa','Khi có triệu chứng, tìm đánh giá y tế thay vì đối chiếu sao để tự chẩn đoán'],boundary:'Tử Vi không phải công cụ chẩn đoán bệnh, tiên lượng tuổi thọ hoặc thay thế bác sĩ.'},
+  '迁移': {reading:'cách thích nghi với môi trường bên ngoài, đi xa, thay đổi nơi sống và xây dựng quan hệ xã hội',practical:['Kiểm tra điều kiện pháp lý, tài chính và công việc trước khi chuyển môi trường','Chủ động xây mạng lưới nhưng xác minh cơ hội và thông tin'],boundary:'Không khẳng định chắc chắn xuất ngoại, tai nạn hay thành bại khi đi xa.'},
+  '仆役': {reading:'cách lựa chọn cộng sự, phân công, xây dựng mạng lưới và xử lý lợi ích trong hợp tác',practical:['Thống nhất quyền hạn, lợi ích, thời hạn và trách nhiệm bằng văn bản','Đánh giá cộng sự bằng hành vi, năng lực và lịch sử thực hiện cam kết'],boundary:'Không kết luận người khác tốt/xấu hoặc phản bội chỉ từ cung này.'},
+  '交友': {reading:'cách lựa chọn bạn bè, cộng sự, duy trì mạng lưới và đặt ranh giới trong quan hệ',practical:['Phân biệt quan hệ xã giao, bạn thân và đối tác công việc','Giữ nguyên tắc bảo mật, tiền bạc và trách nhiệm khi hợp tác'],boundary:'Không gán động cơ hay phẩm chất cho một người cụ thể từ lá số.'},
+  '官禄': {reading:'phong cách làm việc, năng lực chuyên môn, vai trò trong tổ chức, quyền hạn và hướng phát triển nghề nghiệp',practical:['Chọn công việc dựa trên kỹ năng, điều kiện thị trường và trải nghiệm thực tế','Xây hồ sơ năng lực, mục tiêu theo quý và tiêu chí đánh giá rõ ràng'],boundary:'Không khẳng định chắc chắn chức vụ, danh tiếng hoặc thành bại nghề nghiệp.'},
+  '田宅': {reading:'môi trường sống, cách quản lý nhà cửa, tài sản cố định và nguồn lực gia đình',practical:['Kiểm tra pháp lý, hiện trạng và dòng tiền trước quyết định bất động sản','Tách tài sản cá nhân, tài sản chung và trách nhiệm gia đình'],boundary:'Không dự đoán chắc chắn số lượng nhà đất, thừa kế hoặc tranh chấp.'},
+  '福德': {reading:'nhu cầu nghỉ ngơi, cảm nhận đủ đầy, cách tìm niềm vui và khả năng tự điều hòa áp lực',practical:['Duy trì hoạt động phục hồi năng lượng và kết nối xã hội','Nhận diện thói quen gây căng thẳng và tìm hỗ trợ phù hợp khi cần'],boundary:'Không dùng cung này để chẩn đoán rối loạn tâm lý hoặc kết luận hạnh phúc cả đời.'},
+  '父母': {reading:'quan hệ với cha mẹ, người nuôi dưỡng, người hướng dẫn và cách tiếp nhận sự hỗ trợ từ thế hệ trước',practical:['Trao đổi rõ nhu cầu chăm sóc, tài chính và ranh giới giữa các thế hệ','Tìm người hướng dẫn dựa trên chuyên môn và uy tín thực tế'],boundary:'Không dùng lá số để kết luận tuổi thọ, phẩm chất hoặc số phận của cha mẹ.'}
+};
+
 function starPhrase(s: Star, palaceName?: string): string {
   const core = STAR_CORE[s.name] || (s.type === 'sha'
     ? 'Sát tinh này thường được luận như một áp lực hoặc tính chất quyết liệt; không có nghĩa sự kiện xấu chắc chắn xảy ra.'
@@ -177,7 +214,15 @@ function starPhrase(s: Star, palaceName?: string): string {
         : 'Chính tinh cần được luận trong tổng thể lá số.');
   const state = s.brightnessRaw ? ' ' + brightnessText(s) : '';
   const hua = s.siHua ? ' ' + HUA[s.siHua] : '';
-  return core + state + hua;
+  const tendency = STAR_TENDENCIES[s.name];
+  const lens = palaceName ? PALACE_LENSES[palaceName] : undefined;
+  const contextual = lens
+    ? ' Trong cung ' + palaceName + ', cần đọc biểu hiện qua ' + lens.reading + '.'
+    : '';
+  const applied = tendency && lens
+    ? ' Khả năng phát huy: ' + tendency.potential + '. Mặt cần tự kiểm soát: ' + tendency.risk + '.'
+    : '';
+  return core + state + hua + contextual + applied;
 }
 function combination(stars: string[]): string[] {
   const set = new Set(stars);
@@ -197,94 +242,154 @@ function combination(stars: string[]): string[] {
 
 export function analyzePalace(chart: ZiweiChart, palace: Palace): PalaceAnalysis {
   const domain = DOMAINS[palace.name] || {theme:'Khía cạnh đời sống',focus:'Vai trò của cung trong toàn bộ lá số',linked:['命宫'],advice:['Đối chiếu cung đối diện và tam phương tứ chính trước khi kết luận.']};
+  const lens = PALACE_LENSES[palace.name] || {reading:'lĩnh vực đời sống tương ứng với cung này',practical:domain.advice,boundary:'Chỉ kết luận trong phạm vi dữ liệu hiện có.'};
   const all = palace.stars;
-  const major = all.filter(s => s.type === 'major');
+  const major = all.filter(s => s.type === 'major' || MAJOR.includes(s.name));
   const lucky = all.filter(s => s.type === 'lucky' || LUCKY.includes(s.name));
   const sha = all.filter(s => s.type === 'sha' || SHA.includes(s.name));
-  const hua = all.filter(s => s.siHua);
+  const hua = all.filter(s => Boolean(s.siHua));
   const triad = [byBranch(chart, palace.branch + 4), byBranch(chart, palace.branch + 8)].filter((p): p is Palace => Boolean(p));
   const opposite = byBranch(chart, palace.branch + 6);
   const related = [...triad, ...(opposite ? [opposite] : [])].filter((p,i,a) => a.findIndex(x => x.branch === p.branch) === i);
-  const relationNames = related.map(p => {
-    const majors = p.stars.filter(s => s.type === 'major');
-    const transformations = p.stars.filter(s => s.siHua).map(s => `${s.name} Hóa ${s.siHua}`).join('、');
-    return `${p.name} (${majors.length ? names(majors) : 'vô chính diệu'}${transformations ? '; ' + transformations : ''})`;
-  });
   const strengths: string[] = [];
   const cautions: string[] = [];
   const interactions: string[] = [];
   const evidence: string[] = [];
-  const practical = [...domain.advice];
+  const practical = [...lens.practical];
+
+  evidence.push('Cung đang luận: ' + palace.name + ' tại địa chi ' + palace.branch + ', thiên can cung ' + palace.stem + '.');
+  evidence.push('Phạm vi luận: ' + lens.reading + '.');
+  evidence.push('Sao tọa thủ thực tế: ' + (all.length ? names(all) : 'không có sao được ghi nhận trong dữ liệu cung này') + '.');
 
   if (major.length) {
     evidence.push('Chính tinh tọa thủ: ' + names(major));
-    for (const s of major) evidence.push(`${s.name}: ${s.brightnessRaw ? 'độ sáng ' + s.brightnessRaw : 'chưa có độ sáng chi tiết'}${s.siHua ? ', Hóa ' + s.siHua : ''}`);
-  } else {
-    evidence.push('Cung vô chính diệu');
-    cautions.push('Cung vô chính diệu: không luận là trống rỗng hay xấu. Cần mượn chính tinh từ cung đối diện và xét tam phương tứ chính.');
-    if (palace.borrowedStars?.length) interactions.push('Chính tinh mượn từ ' + (palace.borrowedFromName || 'cung đối diện') + ': ' + palace.borrowedStars.join('、') + '. Đây là nguồn tham chiếu, không phải sao tọa thủ thực tế.');
-  }
-  if (lucky.length) strengths.push('Cát tinh/phụ trợ hiện diện: ' + names(lucky) + '. Đây là dấu hiệu hỗ trợ theo cách luận truyền thống, hiệu lực tùy tổ hợp.');
-  if (sha.length) cautions.push('Sát tinh/Không Kiếp hiện diện: ' + names(sha) + '. Nên xem đây là khu vực cần quản trị áp lực, va chạm hoặc hao tổn, không phải dự báo chắc chắn.');
-  if (hua.length) {
-    const favorableHua = hua.filter(s => s.siHua === '禄' || s.siHua === '权' || s.siHua === '科');
-    const huaJi = hua.filter(s => s.siHua === '忌');
-    if (favorableHua.length) strengths.push('Tứ Hóa tại cung có ' + favorableHua.map(s => `${s.name} Hóa ${s.siHua}`).join('、') + '. Đây là yếu tố cần xét theo lĩnh vực của cung, không tự động đồng nghĩa thành công hay giàu có.');
-    if (huaJi.length) cautions.push('Tứ Hóa Kỵ tại cung có ' + names(huaJi) + '. Theo cách luận truyền thống, đây là điểm dễ phát sinh vướng mắc hoặc phải dành nhiều tâm sức; cần xem thêm tam phương tứ chính và vận hạn trước khi kết luận.');
-    for (const s of hua) interactions.push(s.name + ' mang ' + (s.siHua ? HUA[s.siHua] : 'Tứ Hóa') + (s.siHua === '忌' ? ' Cần xem sao này ở cung nào và các cung liên hệ.' : ' Cần xét lĩnh vực của cung để hiểu biểu hiện.'));
-  }
-  if (palace.selfSihua?.length) interactions.push('Dấu tự hóa theo dữ liệu lá số: ' + palace.selfSihua.map(x => x.starName + ' tự Hóa ' + x.siHua).join('、') + '. Cần phân biệt tự hóa với sinh niên Tứ Hóa.');
-  const bright = major.filter(s => s.brightness === 'bright' || ['庙','旺','得','利'].includes(s.brightnessRaw || ''));
-  const dim = major.filter(s => s.brightness === 'dim' || ['陷','不'].includes(s.brightnessRaw || ''));
-  if (bright.length) strengths.push('Chính tinh có trạng thái sáng/thuận theo bảng đang dùng: ' + names(bright) + '.');
-  if (dim.length) cautions.push('Chính tinh có trạng thái yếu/bất lợi theo bảng đang dùng: ' + names(dim) + '; cần xét cát tinh, Tứ Hóa và hội chiếu trước khi đánh giá.');
-  if (related.length) {
-    interactions.push('Tam phương tứ chính của cung này gồm: ' + relationNames.join('; ') + '. Các cung này là dữ liệu hội chiếu cần đọc cùng nhau, không phải bằng chứng rằng mọi đặc điểm của chúng đều ứng nghiệm trực tiếp vào cung đang xét.');
-    for (const rp of related) {
-      const transformed = rp.stars.filter(s => s.siHua);
-      if (transformed.length) interactions.push(`Tại cung ${rp.name}, ${transformed.map(s => `${s.name} mang Hóa ${s.siHua}`).join('、')}. Khi luận ${palace.name}, cần giữ rõ đây là Tứ Hóa ở cung hội chiếu, không gán nhầm thành sao Hóa tại cung ${palace.name}.`);
+    for (const s of major) {
+      evidence.push(s.name + ': ' + (s.brightnessRaw ? 'độ sáng ' + s.brightnessRaw : 'chưa có độ sáng chi tiết') + (s.siHua ? ', sinh niên Hóa ' + s.siHua : ''));
     }
+    const readable = major.map(s => {
+      const tendency = STAR_TENDENCIES[s.name];
+      const text = s.name + ': ' + starPhrase(s, palace.name);
+      return tendency ? text + ' Cách ứng dụng: ' + tendency.practice + '.' : text;
+    });
+    var starSynthesis = readable.join('\n\n');
+  } else {
+    evidence.push('Cung vô chính diệu: không có chính tinh tọa thủ.');
+    const borrowed = palace.borrowedStars?.length ? palace.borrowedStars.join('、') : (opposite?.stars.filter(s => s.type === 'major').map(s => s.name).join('、') || '');
+    starSynthesis = borrowed
+      ? 'Cung ' + palace.name + ' vô chính diệu. Chính tinh tại cung đối diện ' + (opposite?.name || palace.borrowedFromName || '') + ' (' + borrowed + ') chỉ được dùng làm sao mượn để tham chiếu, không phải sao tọa thủ. Cần đọc cùng các sao thực tế tại cung này, hai cung tam hợp và Tứ Hóa hội chiếu.'
+      : 'Cung ' + palace.name + ' vô chính diệu và dữ liệu hiện không xác định được chính tinh mượn từ cung đối diện. Chưa đủ căn cứ để kết luận về chính tinh; cần kiểm tra dữ liệu an sao và trường phái đang chọn.';
+    cautions.push('Không coi vô chính diệu là cung trống hoặc mặc nhiên xấu. Phải xét chính tinh mượn từ đối cung, sao thực tọa thủ và toàn bộ tam phương tứ chính.');
+    if (borrowed) interactions.push('Sao mượn từ đối cung ' + (opposite?.name || palace.borrowedFromName || '') + ': ' + borrowed + '. Phân biệt rõ sao mượn với sao tọa thủ.');
   }
+
+  if (lucky.length) {
+    strengths.push('Nhóm sao trợ lực tọa thủ: ' + names(lucky) + '. Đây là yếu tố hỗ trợ theo cách luận truyền thống; mức độ còn tùy chính tinh, độ sáng, Tứ Hóa và các sao đồng cung.');
+    evidence.push('Nhóm sao trợ lực tọa thủ: ' + names(lucky));
+  }
+  if (sha.length) {
+    cautions.push('Nhóm sát tinh/Không Kiếp tọa thủ: ' + names(sha) + '. Nên đọc thành khu vực cần quản trị áp lực, xung đột hoặc hao tổn; không chuyển thành dự báo tai họa chắc chắn.');
+    evidence.push('Nhóm sát tinh tọa thủ: ' + names(sha));
+  }
+
+  const bright = major.filter(s => s.brightness === 'bright' || ['庙','旺','得','利'].includes(s.brightnessRaw || ''));
+  const dim = major.filter(s => s.brightness === 'dim' || ['陷','不','闲'].includes(s.brightnessRaw || ''));
+  if (bright.length) strengths.push('Theo bảng độ sáng đang chọn, chính tinh có trạng thái miếu/vượng/đắc/lợi: ' + bright.map(s => s.name + (s.brightnessRaw ? ' (' + s.brightnessRaw + ')' : '')).join('、') + '. Đây là điều kiện thuận để phát huy phẩm chất sao, không tự động bảo đảm kết quả tốt.');
+  if (dim.length) cautions.push('Theo bảng độ sáng đang chọn, chính tinh có trạng thái hãm/bất lợi: ' + dim.map(s => s.name + (s.brightnessRaw ? ' (' + s.brightnessRaw + ')' : '')).join('、') + '. Cần xét sao trợ lực, Tứ Hóa và hội chiếu trước khi đánh giá mức độ.');
+  if (!bright.length && !dim.length) evidence.push('Không có phân loại miếu/vượng/hãm đủ rõ để đưa ra nhận định độ sáng.');
+
+  if (hua.length) {
+    const favorable = hua.filter(s => s.siHua === '禄' || s.siHua === '权' || s.siHua === '科');
+    const ji = hua.filter(s => s.siHua === '忌');
+    if (favorable.length) strengths.push('Sinh niên Tứ Hóa tọa thủ: ' + favorable.map(s => s.name + ' Hóa ' + s.siHua).join('、') + '. Khi luận ' + palace.name + ', cần xem chúng tác động vào ' + lens.reading + '; không đồng nhất Hóa Lộc với chắc chắn giàu có, Hóa Quyền với chức vụ hay Hóa Khoa với danh tiếng.');
+    if (ji.length) cautions.push('Sinh niên Hóa Kỵ tọa thủ: ' + ji.map(s => s.name).join('、') + '. Đây là điểm cần dành sự chú ý và kiểm tra kỹ trong lĩnh vực ' + lens.reading + '; không phải kết luận thất bại.');
+    for (const s of hua) interactions.push(s.name + ' Hóa ' + s.siHua + ' tọa thủ ngay tại cung ' + palace.name + '. ' + HUA[s.siHua as string]);
+    evidence.push('Sinh niên Tứ Hóa tọa thủ: ' + hua.map(s => s.name + ' Hóa ' + s.siHua).join('、'));
+  } else {
+    evidence.push('Không ghi nhận sao sinh niên Tứ Hóa tọa thủ tại cung này.');
+  }
+
+  if (palace.selfSihua?.length) {
+    interactions.push('Tự Hóa theo cung can: ' + palace.selfSihua.map(x => x.starName + ' tự Hóa ' + x.siHua).join('、') + '. Đây là lớp dữ liệu riêng, không được gộp với sinh niên Tứ Hóa.');
+    evidence.push('Dấu tự Hóa: ' + palace.selfSihua.map(x => x.starName + ' tự Hóa ' + x.siHua).join('、'));
+  }
+
+  if (related.length) {
+    const relationText = related.map(p => {
+      const role = p.branch === ((palace.branch + 6) % 12) ? 'xung chiếu' : 'tam hợp';
+      const majors = p.stars.filter(s => s.type === 'major' || MAJOR.includes(s.name));
+      const helpers = p.stars.filter(s => s.type === 'lucky' || LUCKY.includes(s.name));
+      const challenges = p.stars.filter(s => s.type === 'sha' || SHA.includes(s.name));
+      const transformations = p.stars.filter(s => Boolean(s.siHua));
+      const parts = [majors.length ? 'chính tinh ' + names(majors) : 'vô chính diệu'];
+      if (helpers.length) parts.push('trợ tinh ' + names(helpers));
+      if (challenges.length) parts.push('sát tinh ' + names(challenges));
+      if (transformations.length) parts.push('Tứ Hóa ' + transformations.map(s => s.name + ' Hóa ' + s.siHua).join('、'));
+      return p.name + ' (' + role + '): ' + parts.join('; ');
+    });
+    interactions.push('Tổng hợp tam phương tứ chính: ' + relationText.join(' | ') + '. Đây là các nguồn hội chiếu; sao ở những cung này không được chuyển thành sao tọa thủ của cung ' + palace.name + '.');
+    for (const rp of related) {
+      const transformed = rp.stars.filter(s => Boolean(s.siHua));
+      if (transformed.length) interactions.push('Tại cung hội chiếu ' + rp.name + ', ' + transformed.map(s => s.name + ' Hóa ' + s.siHua).join('、') + '. Tác động được đọc qua quan hệ hội chiếu, không gán nhầm thành Tứ Hóa tọa thủ tại ' + palace.name + '.');
+    }
+    evidence.push('Các cung hội chiếu: ' + related.map(p => p.name).join('、'));
+  }
+
   const chartPatterns = getChartPatterns(chart).filter(pattern => pattern.palaces.includes(palace.name));
   for (const pattern of chartPatterns) {
-    const required = pattern.conditions?.required?.length ? ` Điều kiện đã nhận diện: ${pattern.conditions.required.join('；')}.` : '';
-    const bonus = pattern.conditions?.bonus?.length ? ` Yếu tố gia tăng: ${pattern.conditions.bonus.join('；')}.` : '';
-    const breaking = pattern.conditions?.breaking?.length ? ` Điểm cần xét/khả năng phá cách: ${pattern.conditions.breaking.join('；')}.` : '';
-    const source = pattern.source ? ` Nguồn ghi trong bộ quy tắc: ${pattern.source}.` : '';
-    interactions.push(`Cách cục ${pattern.name} (${pattern.level}): ${pattern.description}${required}${bonus}${breaking}${source}`);
-    evidence.push(`Cách cục được bộ nhận diện xác lập: ${pattern.name}${pattern.source ? ' — ' + pattern.source : ''}`);
+    const required = pattern.conditions?.required?.length ? ' Điều kiện nhận diện đã thỏa: ' + pattern.conditions.required.join('；') + '.' : '';
+    const bonus = pattern.conditions?.bonus?.length ? ' Yếu tố hỗ trợ được ghi nhận: ' + pattern.conditions.bonus.join('；') + '.' : '';
+    const breaking = pattern.conditions?.breaking?.length ? ' Yếu tố giảm lực/phá cách được ghi nhận: ' + pattern.conditions.breaking.join('；') + '.' : '';
+    const source = pattern.source ? ' Nguồn quy tắc: ' + pattern.source + '.' : '';
+    interactions.push('Cách cục ' + pattern.name + ' (' + pattern.level + '): ' + pattern.description + required + bonus + breaking + source + ' Đây là nhận định theo trường phái của bộ quy tắc, không phải dự báo chắc chắn.');
+    evidence.push('Cách cục nhận diện: ' + pattern.name + (pattern.source ? ' — ' + pattern.source : ''));
   }
+
   const combos = combination(all.map(s => s.name));
   interactions.push(...combos);
   if (palace.isMingGong) {
     const shen = byBranch(chart, chart.shenGongBranch);
-    if (shen) interactions.push('Liên hệ cung Thân tại ' + shen.name + ': ' + names(shen.stars.filter(s => s.type === 'major')) + '. Mệnh phản ánh nền tảng, Thân nhấn mạnh cách biểu hiện qua hành động và trải nghiệm.');
+    if (shen) interactions.push('Đối chiếu Mệnh – Thân: cung Thân tại ' + shen.name + ', chính tinh ' + (names(shen.stars.filter(s => s.type === 'major')) || 'vô chính diệu') + '. Cung Mệnh được đọc như nền tảng; cung Thân bổ sung cách khuynh hướng được thể hiện qua lựa chọn và hành động.');
   }
   if (palace.isShenGong) {
     const ming = byBranch(chart, chart.mingGongBranch);
-    if (ming) interactions.push('Đối chiếu với cung Mệnh tại ' + ming.name + ': ' + names(ming.stars.filter(s => s.type === 'major')) + '.');
+    if (ming) interactions.push('Đối chiếu Thân – Mệnh: cung Mệnh tại ' + ming.name + ', chính tinh ' + (names(ming.stars.filter(s => s.type === 'major')) || 'vô chính diệu') + '. Không tách Thân khỏi nền tảng Mệnh khi tổng hợp.');
   }
-  if (palace.daXianAge) {
-    const isCurrent = palace.isCurrentDaXian || (chart.daXians[chart.currentDaXianIndex]?.palaceBranch === palace.branch);
-    if (isCurrent) interactions.push('Cung này đang là cung đại hạn hiện tại theo dữ liệu lập lá số.');
-  }
-  const starSynthesis = major.length
-    ? major.map(s => s.name + ': ' + starPhrase(s, palace.name)).join('\n\n')
-    : 'Cung không có chính tinh tọa thủ. Không được coi đây là cung trống hoặc mặc nhiên bất lợi. Cần đọc chính tinh cung đối diện như nguồn tham chiếu, sau đó kiểm tra các sao thực tọa thủ, Tứ Hóa và tam phương tứ chính.';
-  const starRoles = major.map(s => `${s.name} thiên về ${STAR_FUNCTION[s.name] || 'một sắc thái riêng cần xét theo hệ thống sao'}`).join('; ');
-  const domainLens = DOMAIN_LENS[palace.name] || 'lĩnh vực đời sống tương ứng với cung này';
+
+  const starRoles = major.map(s => {
+    const tendency = STAR_TENDENCIES[s.name];
+    return s.name + ' thiên về ' + (tendency ? tendency.potential : (STAR_FUNCTION[s.name] || 'một sắc thái riêng cần xét theo hệ thống sao'));
+  }).join('; ');
   const overview = major.length
-    ? `${domain.focus}. Tại đây, ${starRoles}. Vì vậy, khi đọc cung ${palace.name}, trọng tâm không phải gắn nhãn tốt/xấu cho từng sao mà là xem các khuynh hướng ấy biểu hiện ra sao trong ${domainLens}. ${bright.length ? 'Có chính tinh ở trạng thái thuận theo bảng độ sáng đang chọn: ' + names(bright) + '. ' : ''}${dim.length ? 'Có chính tinh ở trạng thái bất lợi theo bảng đang chọn: ' + names(dim) + '; cần cân đối với hội chiếu và Tứ Hóa, không kết luận riêng lẻ. ' : ''}${hua.length ? 'Tại cung có Tứ Hóa gắn với ' + names(hua) + '.' : 'Không có sao tọa thủ mang Tứ Hóa được ghi nhận tại cung này.'}`
-    : `${domain.focus}. Cung ${palace.name} vô chính diệu; cần mượn chính tinh từ cung đối diện (${opposite?.name || 'chưa xác định'}) làm tham chiếu, đồng thời xét các sao thực tọa thủ, Tứ Hóa và tam phương tứ chính. Không thể chỉ từ trạng thái vô chính diệu mà kết luận tốt hoặc xấu.`;
+    ? 'Luận cung ' + palace.name + ' cần tập trung vào ' + lens.reading + '. Chính tinh tọa thủ gồm ' + names(major) + '; các khuynh hướng chính: ' + starRoles + '. ' +
+      (bright.length ? 'Độ sáng thuận được ghi nhận ở ' + names(bright) + '. ' : '') +
+      (dim.length ? 'Độ sáng cần lưu ý ở ' + names(dim) + '. ' : '') +
+      (hua.length ? 'Sinh niên Tứ Hóa tọa thủ: ' + hua.map(s => s.name + ' Hóa ' + s.siHua).join('、') + '. ' : 'Chưa ghi nhận sinh niên Tứ Hóa tọa thủ. ') +
+      'Kết luận phải cân bằng với phụ tinh, sát tinh, tự Hóa và các cung tam phương tứ chính; không thể xếp cung tốt/xấu chỉ từ một sao.'
+    : 'Cung ' + palace.name + ' vô chính diệu. Trọng tâm luận vẫn là ' + lens.reading + '. Cần mượn chính tinh từ cung đối diện làm tham chiếu nếu dữ liệu có ghi nhận, đồng thời đọc các sao thực tọa thủ, Tứ Hóa và toàn bộ tam phương tứ chính. ' + lens.boundary;
+
   const current = chart.daXians[chart.currentDaXianIndex];
-  const currentPeriod = current
-    ? 'Đại hạn hiện tại theo lá số: ' + current.startAge + '–' + current.endAge + ' tuổi, tại cung ' + current.palaceName + '. ' +
-      (current.palaceBranch === palace.branch ? 'Cung đang xét trùng cung đại hạn hiện tại.' : 'Cung đang xét không phải cung đại hạn hiện tại; cần phân biệt luận bản mệnh với vận hạn.')
-    : 'Chưa có dữ liệu đại hạn hiện tại để đối chiếu.';
-  if (!strengths.length) strengths.push('Dữ liệu cung này chưa cho thấy yếu tố trợ lực nổi bật đủ căn cứ để nêu thành ưu điểm riêng. Cần đọc cùng toàn cục lá số, không tự suy ra điểm tốt chỉ vì không thấy sát tinh.');
-  if (!cautions.length) cautions.push('Chưa ghi nhận sát tinh chính trong danh sách sao tọa thủ. Đây chỉ là nhận xét về dữ liệu tại cung, không phải kết luận rằng lĩnh vực này chắc chắn thuận lợi.');
-  if (!interactions.length) interactions.push('Bộ quy tắc hiện không nhận diện tổ hợp đặc biệt tại cung này. Điều đó không có nghĩa là cung không chịu ảnh hưởng của toàn cục lá số.');
+  let currentPeriod = 'Chưa có dữ liệu đại hạn hiện tại để đối chiếu.';
+  if (current) {
+    const currentPalace = byBranch(chart, current.palaceBranch);
+    const periodStars = currentPalace?.stars.filter(s => s.type === 'major' || MAJOR.includes(s.name)) || [];
+    const periodHua = current.siHua
+      ? ['Lộc ' + current.siHua.lu, 'Quyền ' + current.siHua.quan, 'Khoa ' + current.siHua.ke, 'Kỵ ' + current.siHua.ji].join(' · ')
+      : 'Chưa có dữ liệu Tứ Hóa đại hạn';
+    currentPeriod = 'Đại hạn hiện tại: ' + current.startAge + '–' + current.endAge + ' tuổi tại cung ' + current.palaceName + '. ';
+    currentPeriod += 'Chính tinh tại cung đại hạn: ' + (periodStars.length ? names(periodStars) : 'vô chính diệu hoặc chưa có dữ liệu') + '. ';
+    currentPeriod += 'Tứ Hóa đại hạn: ' + periodHua + '. ';
+    currentPeriod += current.palaceBranch === palace.branch
+      ? 'Cung đang luận trùng cung đại hạn: cần đọc lớp vận hạn này chồng lên cấu trúc bản mệnh, không thay thế bản mệnh.'
+      : 'Cung đang luận không trùng cung đại hạn; phần này chỉ là bối cảnh vận hạn chung, không được xem là tác động trực tiếp đã xác lập lên cung đang luận.';
+    if (currentPalace) interactions.push('Cung đại hạn hiện tại ' + current.palaceName + ': ' + (periodStars.length ? names(periodStars) : 'vô chính diệu') + '. Tứ Hóa đại hạn: ' + periodHua + '. Đây là lớp vận hạn, phân biệt với sinh niên Tứ Hóa.');
+    evidence.push('Đại hạn hiện tại: ' + current.startAge + '–' + current.endAge + ' tuổi, cung ' + current.palaceName + ', địa chi ' + current.palaceBranch);
+  }
+
+  if (!strengths.length) strengths.push('Chưa có yếu tố trợ lực nổi bật đủ căn cứ để kết luận riêng. Điều này không đồng nghĩa lĩnh vực ' + lens.reading + ' chắc chắn bất lợi.');
+  if (!cautions.length) cautions.push('Chưa ghi nhận sát tinh chính hoặc Hóa Kỵ tọa thủ. Đây không phải bảo đảm rằng lĩnh vực ' + lens.reading + ' luôn thuận lợi; vẫn cần xét toàn cục và hoàn cảnh thực tế.');
+  if (!interactions.length) interactions.push('Chưa có tổ hợp đặc biệt được bộ quy tắc nhận diện tại cung này. Kết quả nhận diện cách cục không bao quát mọi trường phái Tử Vi.');
+  practical.push(lens.boundary);
+  practical.push('Các gợi ý chỉ là cách vận dụng mang tính tham khảo; quyết định thực tế cần dựa trên dữ kiện, hoàn cảnh và tư vấn chuyên môn phù hợp.');
   return {theme:domain.theme,overview,starSynthesis,strengths,cautions,interactions,practical,currentPeriod,evidence};
 }
-
 export function interpretStar(star: Star, palaceName?: string): string { return starPhrase(star, palaceName); }

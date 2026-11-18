@@ -1,6 +1,10 @@
 TUVI247 integrates code from Renhuai123/ziwei-doushu.
 Upstream: https://github.com/Renhuai123/ziwei-doushu
-Upstream revision: d4ae2ac231a47146d9e2801fc9a017d712cb3289
+Upstream code revision originally migrated: d4ae2ac231a47146d9e2801fc9a017d712cb3289
 License for upstream source code: MIT. See LICENSE-ziwei-doushu.
-The separately licensed CC BY-NC-SA 4.0 quotations and upstream interpretation datasets are not copied into this migration. The v4.0 interpretation dataset has separate CC BY 4.0 attribution terms and is not included.
-The upstream open-source engine provides chart calculation and pattern detection. It does not include the upstream commercial judgment library, AI prompts, or hosted AI interpretation API.
+
+The upstream v4.0 interpretation dataset is a separate release asset (674,976 charts × 13 dimensions; 1950–2026), licensed CC BY 4.0 under DATASET-LICENSE. It is not bundled in this repository yet. If/when its contents are used, retain this attribution:
+“Zi Wei Dou Shu Open Interpretation Dataset v4.0 (674,976 charts × 13 dimensions), Renhuai123/ziwei-doushu, https://github.com/Renhuai123/ziwei-doushu”.
+
+The separately licensed quotations from Ni Haixia's Tian Ji are not included. Those quotations are outside the dataset's CC BY 4.0 grant and remain subject to the upstream CC BY-NC-SA 4.0 terms.
+The upstream open-source engine provides chart calculation and pattern detection; it does not include the upstream commercial judgment library, AI prompts, or hosted AI interpretation API.
