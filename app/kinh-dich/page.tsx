@@ -1,7 +1,7 @@
 'use client';
 import { useMemo, useState } from 'react';
 import { HEXAGRAMS, getHexagram } from '@/lib/iching/data';
-import { castCoins } from '@/lib/iching/cast';
+import { cast } from '@/lib/iching/cast';
 import { read } from '@/lib/iching/reading';
 import { relations } from '@/lib/iching/relations';
 import type { Cast, Hexagram } from '@/lib/iching/types';
@@ -35,23 +35,29 @@ function HexagramCard({hexagram,label,moving=[],primary=false}:{hexagram:Hexagra
 export default function KinhDichPage() {
  const [question,setQuestion]=useState('');
  const [result,setResult]=useState<Cast|null>(null);
+ const [coinFaces,setCoinFaces]=useState<Array<Array<number|null>>>(()=>Array.from({length:6},()=>[null,null,null]));
  const [search,setSearch]=useState('');
  const [selected,setSelected]=useState<Hexagram|null>(null);
  const reading=useMemo(()=>result?read(result):null,[result]);
  const vietnamese=useMemo(()=>result&&reading?buildVietnameseReading(result,reading,question):null,[result,reading,question]);
  const related=useMemo(()=>result?relations(result.primary):null,[result]);
  const filtered=useMemo(()=>HEXAGRAMS.filter(h=>(h.name+h.pinyin+KEYWORDS[h.keyword]).toLowerCase().includes(search.toLowerCase())),[search]);
- function divineNow(){setResult(castCoins());setSelected(null);}
+ function setCoinFace(line:number,coin:number,value:number){setCoinFaces(previous=>previous.map((row,i)=>i===line?row.map((face,j)=>j===coin?value:face):row));setResult(null);}
+ function resetCoins(){setCoinFaces(Array.from({length:6},()=>[null,null,null]));setResult(null);setSelected(null);}
+ function completeCast(){if(coinFaces.some(row=>row.some(face=>face===null)))return;const values=coinFaces.map(row=>row.reduce<number>((sum,face)=>sum+(face??0),0));setResult(cast(values));setSelected(null);}
  return <main className="shell iching-page">
   <header className="topbar"><a className="brand" href="/"><span className="seal">易</span><span><b>TỬ VI 247</b><small>LẬP LÁ SỐ · TRA CỨU · KHÁM PHÁ</small></span></a><nav className="main-nav" aria-label="Điều hướng chính"><a className="nav-link" href="/">Tử Vi</a><a className="nav-link active" href="/kinh-dich/">Kinh Dịch</a></nav><span className="top-note">Công cụ Kinh Dịch tiếng Việt</span></header>
   <section className="iching-hero"><span className="kicker">CHU DỊCH · 64 QUẺ · 384 HÀO</span><h1>Gieo một quẻ,<br/><em>soi rõ điều đang băn khoăn</em></h1><p>Gieo quẻ bằng phương pháp ba đồng xu, lập đủ sáu hào từ dưới lên, xác định hào động và quẻ biến. Kết quả hiển thị căn cứ cổ văn cùng quy tắc đọc quẻ, không dùng AI để tự tạo số quẻ.</p></section>
   <section className="iching-panel">
    <div className="panel-title"><div><span className="kicker">BƯỚC 01 · KHỞI NIỆM</span><h2>Đặt câu hỏi trước khi gieo quẻ</h2></div><span className="step">01 / 03</span></div>
-   <div className="iching-question"><label>Câu hỏi của bạn <small style={{fontWeight:400,color:'var(--muted)'}}>Nên hỏi rõ một vấn đề tại một thời điểm</small><input value={question} onChange={e=>setQuestion(e.target.value)} placeholder="Ví dụ: Tôi có nên nhận lời công việc này không?"/></label><button className="primary" type="button" onClick={divineNow}>GIEO 6 HÀO <span>→</span></button></div>
-   <div className="coin-actions"><small>Mỗi hào được tạo từ tổng điểm của 3 đồng xu: 6 (lão âm), 7 (thiếu dương), 8 (thiếu âm), 9 (lão dương). Sáu lần gieo được xếp từ hào 1 ở dưới lên hào 6 ở trên.</small></div>
+   <div className="iching-question"><label>Câu hỏi của bạn <small style={{fontWeight:400,color:'var(--muted)'}}>Chỉ nêu một việc cụ thể, không dùng câu hỏi để quyết định quẻ</small><input value={question} onChange={e=>setQuestion(e.target.value)} placeholder="Ví dụ: Tôi có nên nhận lời công việc này không?"/></label></div>
+   <div className="coin-actions"><strong>Gieo bằng 3 đồng xu thật · ghi nhận từng hào</strong><p>Giữ nguyên một câu hỏi trong suốt lần gieo. Mỗi lượt, tung đồng thời 3 đồng xu rồi chọn đúng mặt xuất hiện: ngửa = 3 điểm, sấp = 2 điểm. Ghi đủ 6 lượt theo thứ tự hào 1 (dưới cùng) đến hào 6 (trên cùng). Hệ thống không tự random và không chọn quẻ từ nội dung câu hỏi.</p>
+    <div className="manual-cast">{coinFaces.map((row,line)=><div className="manual-line" key={line}><b>Hào {line+1} {line===0?'· dưới cùng':line===5?'· trên cùng':''}</b><div className="coin-picks">{row.map((face,coin)=><div className="coin-pick" key={coin}><small>Xu {coin+1}</small><div><button type="button" className={face===3?'selected':''} onClick={()=>setCoinFace(line,coin,3)}>Ngửa · 3</button><button type="button" className={face===2?'selected':''} onClick={()=>setCoinFace(line,coin,2)}>Sấp · 2</button></div></div>)}</div><span className="line-total">{row.every(face=>face!==null)?'Tổng '+row.reduce<number>((sum,face)=>sum+(face??0),0):'Chưa đủ 3 xu'}</span></div>)}</div>
+    <div className="manual-actions"><button className="primary" type="button" disabled={coinFaces.some(row=>row.some(face=>face===null))} onClick={completeCast}>LẬP QUẺ TỪ 18 MẶT XU →</button><button className="outline" type="button" onClick={resetCoins}>Xóa lượt gieo</button></div>
+   </div>
   </section>
   {result&&reading?<section className="iching-panel" id="ket-qua-que">
-   <div className="panel-title"><div><span className="kicker">BƯỚC 02 · KẾT QUẢ LẬP QUẺ</span><h2>{question.trim()||'Quẻ vừa gieo'}</h2></div><button className="outline" onClick={divineNow}>Gieo lại</button></div>
+   <div className="panel-title"><div><span className="kicker">BƯỚC 02 · KẾT QUẢ LẬP QUẺ</span><h2>{question.trim()||'Quẻ vừa gieo'}</h2></div><button className="outline" onClick={resetCoins}>Gieo lượt mới</button></div>
    <div className="coin-values">{result.values.map((v,i)=><div className="coin-value" key={i}><b>{v}</b><span>Hào {i+1} · {v===6?'Lão âm':v===7?'Thiếu dương':v===8?'Thiếu âm':'Lão dương'}</span></div>)}</div>
    <div className="iching-results"><HexagramCard hexagram={result.primary} label="BẢN QUẺ" moving={result.moving} primary/><HexagramCard hexagram={result.changed} label="BIẾN QUẺ"/></div>
    <div className="reading-box"><h4>Quy tắc đọc quẻ theo Chu Hy</h4><p>{reading.guide}</p><p>Số hào động: <strong>{reading.movingCount}</strong>{reading.lineNumbers.length?' · Hào được chọn: '+reading.lineNumbers.join(', '):''}{reading.primaryWeight?' · Trọng số bản quẻ: 70%':''}</p>{reading.texts.map((t,i)=><p className="classical-text" key={i}><strong>{t.source==='primary'?'Bản quẻ':t.source==='changed'?'Biến quẻ':'Cả hai'}{t.type==='guaCi'?' · Quái từ':t.type==='yaoCi'?' · Hào '+t.line:' · Dụng từ'}:</strong> {t.text}</p>)}</div>
