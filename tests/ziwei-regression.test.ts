@@ -4,6 +4,37 @@ import { lunarToSolar, isValidLunarDate, lunarMonthDayCount } from '../lib/ziwei
 import { clockToStandardDelta, shiftClock, formatClock } from '../lib/ziwei/clock-adjust';
 import { analyzePalace, interpretStar } from '../lib/ziwei/interpretation';
 import type { Palace, Star, ZiweiChart } from '../lib/ziwei/types';
+import {
+  jiangQianShenByBranch, suiQianShenByBranch, boshiShenByStem,
+  boshiReverse, jiangQianShenName, suiQianShenName, boshiShenName,
+} from '../lib/ziwei/shier-shen';
+
+test('the three twelve-deity systems form complete, non-duplicated palace cycles', () => {
+  for (let anchor = 0; anchor < 12; anchor++) {
+    const jiang = jiangQianShenByBranch(anchor);
+    const sui = suiQianShenByBranch(anchor);
+    assert.equal(jiang.length, 12);
+    assert.equal(sui.length, 12);
+    assert.deepEqual([...jiang].sort((a,b)=>a-b), Array.from({length:12},(_,i)=>i));
+    assert.deepEqual([...sui].sort((a,b)=>a-b), Array.from({length:12},(_,i)=>i));
+    assert.equal(jiangQianShenName(anchor, anchor), '将星');
+    assert.equal(suiQianShenName(anchor, anchor), '岁建');
+  }
+});
+
+test('Bo Shi twelve-deity direction follows yang/ying stem and gender rule', () => {
+  for (let stem = 0; stem < 10; stem++) {
+    for (const gender of ['male','female'] as const) {
+      const cycle = boshiShenByStem(stem, gender);
+      assert.equal(cycle.length, 12);
+      assert.deepEqual([...cycle].sort((a,b)=>a-b), Array.from({length:12},(_,i)=>i));
+      const yang = stem % 2 === 0;
+      assert.equal(boshiReverse(stem, gender), yang !== (gender === 'male'));
+      assert.equal(boshiShenName(stem, gender, cycle.indexOf(0)), '博士');
+    }
+  }
+});
+
 
 const palaceNames = ['命宫','兄弟','夫妻','子女','财帛','疾厄','迁移','仆役','官禄','田宅','福德','父母'];
 function makeChart(): ZiweiChart {
