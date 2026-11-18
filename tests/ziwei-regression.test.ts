@@ -5,7 +5,7 @@ import { clockToStandardDelta, shiftClock, formatClock } from '../lib/ziwei/cloc
 import { analyzePalace, interpretStar } from '../lib/ziwei/interpretation';
 import type { Palace, Star, ZiweiChart } from '../lib/ziwei/types';
 import {
-  jiangQianShenByBranch, suiQianShenByBranch, boshiShenByStem,
+  jiangQianShenByBranch, jiangXingBranch, suiQianShenByBranch, boshiShenByStem,
   boshiReverse, jiangQianShenName, suiQianShenName, boshiShenName,
 } from '../lib/ziwei/shier-shen';
 
@@ -17,7 +17,7 @@ test('the three twelve-deity systems form complete, non-duplicated palace cycles
     assert.equal(sui.length, 12);
     assert.deepEqual([...jiang].sort((a,b)=>a-b), Array.from({length:12},(_,i)=>i));
     assert.deepEqual([...sui].sort((a,b)=>a-b), Array.from({length:12},(_,i)=>i));
-    assert.equal(jiangQianShenName(anchor, anchor), '将星');
+    assert.equal(jiangQianShenName(anchor, jiangXingBranch(anchor)), '将星');
     assert.equal(suiQianShenName(anchor, anchor), '岁建');
   }
 });
