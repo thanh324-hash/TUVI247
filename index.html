@@ -192,19 +192,50 @@
     .h-tag b {
       color: var(--primary);
     }
+
+    /* KHUNG BIỂU ĐỒ 12 CUNG */
+    .chart-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
     .chart-container {
       margin-bottom: 30px;
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 10px;
     }
+    /* Thanh cuộn tinh tế */
+    .chart-container::-webkit-scrollbar {
+      height: 8px;
+    }
+    .chart-container::-webkit-scrollbar-track {
+      background: #eee5d3;
+      border-radius: 4px;
+    }
+    .chart-container::-webkit-scrollbar-thumb {
+      background: #c2b294;
+      border-radius: 4px;
+    }
+
+    .chart-wrapper {
+      min-width: 820px; /* Giữ nguyên dạng 4x4 chuẩn tuyệt đối trên mọi màn hình */
+    }
+
     .chart-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       grid-template-rows: repeat(4, 1fr);
       gap: 8px;
       background: #dcd3c1;
-      padding: 8px;
-      border-radius: 12px;
+      padding: 10px;
+      border-radius: 14px;
       min-height: 640px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
     }
+
     .palace-cell {
       background: #fff;
       border: 1px solid #d5c8b2;
@@ -214,12 +245,15 @@
       flex-direction: column;
       position: relative;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.25s ease;
     }
     .palace-cell:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(139, 29, 29, 0.2);
       border-color: var(--primary);
+    }
+    .palace-cell:active {
+      transform: scale(0.98);
     }
     .palace-title {
       font-weight: bold;
@@ -234,6 +268,7 @@
     .palace-branch {
       font-size: 0.85rem;
       color: var(--gold-dark);
+      font-weight: 600;
     }
     .major-stars {
       color: #961b1b;
@@ -263,21 +298,42 @@
     .center-info {
       grid-column: 2 / span 2;
       grid-row: 2 / span 2;
-      background: #fbf9f4;
+      background: linear-gradient(145deg, #fbf9f4, #f5efe1);
       border: 2px solid var(--gold);
-      border-radius: 10px;
+      border-radius: 12px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 18px;
+      padding: 20px;
       text-align: center;
+      box-shadow: inset 0 0 15px rgba(212, 175, 55, 0.15);
     }
     .center-info h3 {
       color: var(--primary);
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       margin-bottom: 6px;
+      letter-spacing: 0.5px;
     }
+
+    /* Hiệu ứng chỉ dẫn chạm lướt trên mobile */
+    .mobile-scroll-hint {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      color: var(--primary);
+      background: #faeed4;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+      animation: pulseHint 2s infinite ease-in-out;
+    }
+    @keyframes pulseHint {
+      0%, 100% { opacity: 0.8; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.03); }
+    }
+
     .reading-card {
       background: #fff;
       border-radius: 12px;
@@ -301,6 +357,7 @@
       margin-bottom: 8px;
       padding-left: 6px;
     }
+
     footer {
       text-align: center;
       margin-top: 40px;
@@ -332,14 +389,19 @@
       height: 22px;
       fill: currentColor;
     }
+
     @media (max-width: 768px) {
-      .chart-grid {
-        display: flex;
-        flex-direction: column;
+      .mobile-scroll-hint {
+        display: inline-flex;
       }
-      .center-info {
-        order: -1;
-        margin-bottom: 15px;
+      .header h1 {
+        font-size: 1.65rem;
+      }
+      .overview-banner {
+        padding: 16px 18px;
+      }
+      .reading-card {
+        padding: 16px 18px;
       }
     }
   </style>
@@ -413,10 +475,18 @@
     <!-- VẬN HẠN NĂM ĐƯỢC CHỌN -->
     <div class="horoscope-card" id="horoscope-box"></div>
 
-    <!-- SƠ ĐỒ 12 CUNG ĐỊA BÀN -->
-    <h2 style="color: var(--primary); margin-bottom: 12px; font-size: 1.35rem;">BẢNG MỆNH BÀN 12 CUNG ĐỊA BÀN</h2>
+    <!-- SƠ ĐỒ 12 CUNG ĐỊA BÀN (GIỮ NGUYÊN FORM CHUẨN 4x4) -->
+    <div class="chart-header-bar">
+      <h2 style="color: var(--primary); font-size: 1.35rem;">BẢNG MỆNH BÀN 12 CUNG ĐỊA BÀN</h2>
+      <div class="mobile-scroll-hint">
+        <span>👉 Vuốt ngang xem đủ 12 cung</span>
+      </div>
+    </div>
+    
     <div class="chart-container">
-      <div class="chart-grid" id="chart-grid"></div>
+      <div class="chart-wrapper">
+        <div class="chart-grid" id="chart-grid"></div>
+      </div>
     </div>
 
     <!-- LUẬN GIẢI CHI TIẾT TỪNG CUNG -->
